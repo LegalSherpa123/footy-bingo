@@ -1,4 +1,4 @@
-<title>NRL Footy Bingo</title>
+<title>Footy Bingo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800&display=swap">
@@ -11,164 +11,173 @@
     --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 26px rgba(16,24,40,.07);
     --tile-shadow:inset 0 0 0 1px var(--line),0 1px 0 rgba(16,24,40,.03);
   }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --ground:#0C1220; --surface:#151F36; --surface-2:#0F1830;
-      --ink:#EAF0F8; --muted:#93A0B8; --line:#26324C;
-      --accent:#F4B62C; --accent-ink:#1A1200; --accent-soft:#2C2412;
-      --field:#2BB56A; --field-soft:#123A28; --field-ink:#BDF6D3;
-      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);
-      --tile-shadow:inset 0 0 0 1px var(--line),0 1px 0 rgba(0,0,0,.3);
-    }
-  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ground:#0C1220; --surface:#151F36; --surface-2:#0F1830;
+    --ink:#EAF0F8; --muted:#93A0B8; --line:#26324C;
+    --accent:#F4B62C; --accent-ink:#1A1200; --accent-soft:#2C2412;
+    --field:#2BB56A; --field-soft:#123A28; --field-ink:#BDF6D3;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);
+    --tile-shadow:inset 0 0 0 1px var(--line),0 1px 0 rgba(0,0,0,.3);}}
   :root[data-theme="dark"]{
     --ground:#0C1220; --surface:#151F36; --surface-2:#0F1830;
     --ink:#EAF0F8; --muted:#93A0B8; --line:#26324C;
     --accent:#F4B62C; --accent-ink:#1A1200; --accent-soft:#2C2412;
     --field:#2BB56A; --field-soft:#123A28; --field-ink:#BDF6D3;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);
-    --tile-shadow:inset 0 0 0 1px var(--line),0 1px 0 rgba(0,0,0,.3);
-  }
+    --tile-shadow:inset 0 0 0 1px var(--line),0 1px 0 rgba(0,0,0,.3);}
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);
-    font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:940px;margin:0 auto;padding:28px 20px 72px}
-  .bebas{font-family:"Bebas Neue",Impact,sans-serif;font-weight:400;letter-spacing:.02em;line-height:.95}
+    font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55}
+  .wrap{max-width:940px;margin:0 auto;padding:26px 20px 72px}
+  .bebas{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.02em;line-height:.95}
+  a{color:var(--accent)}
 
-  header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}
-  .kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
-  h1{margin:.1em 0 .05em;font-size:clamp(3rem,9vw,5.6rem);text-wrap:balance}
+  /* hero */
+  .hero{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(120% 90% at 100% 0%, var(--accent-soft) 0%, transparent 55%);opacity:.8;pointer-events:none}
+  .invited{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  h1{margin:.06em 0 .12em;font-size:clamp(3.2rem,10vw,6rem);position:relative}
   h1 .of{color:var(--accent)}
-  .sub{color:var(--muted);font-size:1.02rem;max-width:56ch}
-  .themetoggle{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--muted);
-    border-radius:999px;padding:8px 14px;font:inherit;font-size:.82rem;cursor:pointer;box-shadow:var(--shadow)}
-  .themetoggle:hover{color:var(--ink)}
-
-  .trialbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px}
-  .pill{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
-    border-radius:999px;padding:6px 13px;font-size:.82rem;color:var(--muted);box-shadow:var(--tile-shadow)}
-  .pill b{color:var(--ink);font-weight:700}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
-
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
-  .card h2{margin:0 0 4px;font-size:1.9rem}
-  .card .h2sub{color:var(--muted);font-size:.9rem;margin:0 0 18px;max-width:62ch}
-
-  /* ---- card builder grid ---- */
-  .cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  @media (max-width:560px){.cardgrid{gap:9px}}
-  .sq{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;
-    padding:16px 16px 14px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;
-    transition:border-color .2s,box-shadow .25s,background .25s}
-  .sq .pos{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}
-  .sq .num{font-family:"Bebas Neue",sans-serif;font-size:clamp(2.4rem,7vw,3.3rem);line-height:.85;color:var(--ink)}
-  .sq.filled{background:var(--field-soft);border-color:var(--field)}
-  .sq.filled .num{color:var(--field-ink)}
-  .selwrap{position:relative;margin-top:12px}
-  .selwrap::after{content:"⌄";position:absolute;right:10px;top:48%;transform:translateY(-60%);
-    color:var(--muted);font-size:1.1rem;pointer-events:none}
-  .sq select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface);color:var(--ink);
-    border:1px solid var(--line);border-radius:10px;padding:9px 26px 9px 11px;font:inherit;font-size:.82rem;
-    font-weight:600;cursor:pointer;line-height:1.2}
-  .sq select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .sq select.empty{color:var(--muted);font-weight:500}
-
-  .builderbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
-  .count{font-weight:700;font-size:.92rem}
-  .count b{color:var(--accent)}
-  .btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;
-    padding:11px 18px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;box-shadow:var(--tile-shadow)}
+  .tag{color:var(--muted);font-size:1.05rem;max-width:52ch;margin:0 0 18px;position:relative}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;position:relative}
+  .btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;
+    padding:12px 20px;font:inherit;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;box-shadow:var(--tile-shadow)}
   .btn:hover{border-color:var(--accent)}
   .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
   .btn[disabled]{opacity:.5;cursor:not-allowed}
   .btn.primary[disabled]{background:var(--surface-2);color:var(--muted)}
-  .minihint{width:100%;font-size:.8rem;color:var(--muted);margin:2px 0 0}
 
-  /* ---- generic sections ---- */
-  .full{margin-top:24px}
+  /* countdown */
+  .count{display:flex;gap:8px;align-items:center;margin:20px 0 0;position:relative;flex-wrap:wrap}
+  .count .lbl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .cd{display:flex;gap:6px}
+  .cd .u{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:6px 9px;text-align:center;min-width:46px}
+  .cd .u b{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;display:block;line-height:1}
+  .cd .u span{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .locked{color:var(--field);font-weight:700}
+
+  .themetoggle{position:absolute;top:18px;right:18px;border:1px solid var(--line);background:var(--surface);
+    color:var(--muted);border-radius:999px;padding:7px 13px;font:inherit;font-size:.8rem;cursor:pointer;z-index:2}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin-top:20px}
+  .card h2{margin:0 0 4px;font-size:1.8rem}
+  .card .h2sub{color:var(--muted);font-size:.9rem;margin:0 0 16px;max-width:62ch}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:4px}
+  .step{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+  .step .k{font-family:"Bebas Neue",sans-serif;font-size:1.4rem;color:var(--accent)}
+  .step .t{font-size:.86rem;color:var(--ink);margin-top:2px}
+
+  .namewrap{margin:2px 0 16px}
+  .namewrap label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em}
+  .namewrap input{width:100%;max-width:340px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;
+    padding:11px 13px;font:inherit;font-size:1rem;color:var(--ink)}
+  .namewrap input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+  .cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:560px){.cardgrid{gap:9px}}
+  .sq{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;
+    padding:15px 15px 13px;min-height:128px;display:flex;flex-direction:column;justify-content:space-between}
+  .sq .pos{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .sq .num{font-family:"Bebas Neue",sans-serif;font-size:clamp(2.3rem,7vw,3.2rem);line-height:.85;color:var(--ink)}
+  .sq.filled{background:var(--field-soft);border-color:var(--field)}
+  .sq.filled .num{color:var(--field-ink)}
+  .selwrap{position:relative;margin-top:10px}
+  .selwrap::after{content:"⌄";position:absolute;right:10px;top:46%;transform:translateY(-60%);color:var(--muted);font-size:1.1rem;pointer-events:none}
+  .sq select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;padding:9px 26px 9px 11px;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+  .sq select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .sq select.empty{color:var(--muted);font-weight:500}
+
+  .builderbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
+  .count2{font-weight:700;font-size:.92rem}
+  .count2 b{color:var(--accent)}
+  .minihint{width:100%;font-size:.8rem;color:var(--muted);margin:2px 0 0}
+  .done-msg{margin-top:14px;background:var(--field-soft);border:1px solid var(--field);color:var(--field-ink);
+    border-radius:12px;padding:14px 16px;display:none}
+  .done-msg.show{display:block}
+  .done-msg b{color:var(--field)}
+
   .fx{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:12px}
   .game{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .game .day{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
   .game .mt{font-weight:700;margin:3px 0 1px}
   .game .vt{font-size:.78rem;color:var(--muted)}
-  .keyrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-  .key{font-size:.76rem;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted)}
-  .key b{color:var(--ink);font-family:"Bebas Neue",sans-serif;font-size:1rem;margin-right:4px}
-  .steps{counter-reset:s;list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
-  .steps li{position:relative;padding-left:34px;font-size:.92rem;color:var(--ink)}
-  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-1px;width:24px;height:24px;
-    border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:.8rem;
-    display:flex;align-items:center;justify-content:center}
-  footer{margin-top:32px;color:var(--muted);font-size:.8rem;text-align:center;line-height:1.7}
+  footer{margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center;line-height:1.7}
 </style>
 
 <div class="wrap">
-  <header class="top">
-    <div>
-      <div class="kicker">Trial run · Round 26</div>
-      <h1 class="bebas">Footy <span class="of">Bingo</span></h1>
-      <p class="sub">Same nine numbers for everyone. For each one, pick a player who wears it this weekend. Your square lights when your player scores a try. Three-in-a-row wins.</p>
+  <button class="themetoggle" id="themeBtn">◐ Theme</button>
+
+  <section class="hero">
+    <div class="invited">You're invited · Round 26 trial</div>
+    <h1 class="bebas">Footy <span class="of">Bingo</span></h1>
+    <p class="tag">Same nine numbers for everyone. Pick a player for each one. When your player scores a try, your square lights up — three-in-a-row wins the week.</p>
+    <div class="cta">
+      <a class="btn primary" href="#build">🏉 Build your card</a>
+      <a class="btn" href="results.html">📊 Live board</a>
     </div>
-    <button class="themetoggle" id="themeBtn" aria-label="Switch light or dark">◐ Theme</button>
-  </header>
-
-  <div class="trialbar">
-    <span class="pill"><span class="dot"></span><b>Sat 29 &amp; Sun 30 Aug</b></span>
-    <span class="pill"><b>5</b>&nbsp;games in play</span>
-    <span class="pill"><b>9</b>&nbsp;players to pick</span>
-    <span class="pill">💰 $10 in · trial week free</span>
-  </div>
-
-  <section class="card" aria-label="Build your card">
-    <h2 class="bebas">Build Your Card</h2>
-    <p class="h2sub">Pick one player for each number — anyone wearing that number across this weekend's five games. Get three-in-a-row of your players scoring tries to take the week.</p>
-    <div class="cardgrid" id="cardgrid"></div>
-    <div class="builderbar">
-      <span class="count" id="count"><b>0</b> / 9 picked</span>
-      <button class="btn primary" id="sendCard" disabled>📲 Send my card on WhatsApp</button>
-      <button class="btn" id="copyCard" disabled>Copy card</button>
-      <p class="minihint" id="hint">Fill all nine squares to send your card to the group.</p>
+    <div class="count" id="count">
+      <span class="lbl">Cards lock in</span>
+      <div class="cd" id="cd"></div>
     </div>
   </section>
 
-  <section class="full card">
-    <h2 class="bebas">The Games In Play</h2>
+  <section class="card">
+    <h2 class="bebas">How It Works</h2>
+    <div class="steps">
+      <div class="step"><div class="k">1</div><div class="t">Same 9 numbers for everyone (below). Each is a position.</div></div>
+      <div class="step"><div class="k">2</div><div class="t">Pick one player who wears each number this weekend — any team.</div></div>
+      <div class="step"><div class="k">3</div><div class="t">Your player scores a try → that square lights up.</div></div>
+      <div class="step"><div class="k">4</div><div class="t">Three-in-a-row wins the week. Land more than one line for a bigger share.</div></div>
+    </div>
+  </section>
+
+  <section class="card" id="build">
+    <h2 class="bebas">Build Your Card</h2>
+    <p class="h2sub">Pick one player for each number, then lock it in. Everyone's picks stay hidden until kickoff.</p>
+    <div class="namewrap">
+      <label for="playerName">Your name</label>
+      <input id="playerName" type="text" placeholder="e.g. Dave" autocomplete="name" maxlength="40">
+    </div>
+    <div class="cardgrid" id="cardgrid"></div>
+    <div class="builderbar">
+      <span class="count2" id="count2"><b>0</b> / 9 picked</span>
+      <button class="btn primary" id="submitCard" disabled>Lock in my card</button>
+      <p class="minihint" id="hint">Add your name and fill all nine squares.</p>
+    </div>
+    <div class="done-msg" id="done"></div>
+  </section>
+
+  <section class="card">
+    <h2 class="bebas">The Games</h2>
     <p class="h2sub">Only tries in these five matches count. Pick players from any of them.</p>
     <div class="fx" id="fx"></div>
   </section>
 
-  <section class="full card">
-    <h2 class="bebas">What The Numbers Mean</h2>
-    <p class="h2sub">Each number is a position — pick a player who wears it.</p>
-    <div class="keyrow" id="key"></div>
-  </section>
-
-  <section class="full card">
-    <h2 class="bebas">How It Runs</h2>
-    <ol class="steps">
-      <li>Fill your card — one player per number — and send it to the group before Saturday 3pm.</li>
-      <li>Across the weekend, a square lights when the player you picked scores a try.</li>
-      <li>First to light three-in-a-row — row, column or diagonal — wins the week.</li>
-      <li>No three-in-a-row? Most squares lit takes it. New numbers next Tuesday.</li>
-    </ol>
-  </section>
-
   <footer>
-    NRL Footy Bingo · trial build for Round 26 · team lists via LeagueUnlimited.<br>
-    Official jersey numbers are confirmed on the named team list each Tuesday.
+    NRL Footy Bingo · trial · team lists via LeagueUnlimited.<br>
+    Cards revealed on the live board at kickoff. Official numbers confirmed on the Tuesday team list.
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
+  // ===== CONFIG =====
+  var ENDPOINT = "";  // <-- paste the Google Apps Script /exec URL here to save to the sheet
+  var LOCK_UTC = Date.parse("2026-08-29T05:00:00Z");   // Sat 29 Aug 3pm AEST / 5pm NZT
+  var LOCK_LABEL = "Sat 5:00pm (NZT)";
+  var ORGANISER_WA = "";  // optional wa.me number for fallback; blank = pick chat
+
   var BOARD=[9,10,3, 7,2,12, 1,5,13];
   var POS={1:"Fullback",2:"Wing",3:"Centre",4:"Centre",5:"Wing",6:"Five-eighth",
            7:"Halfback",8:"Prop",9:"Hooker",10:"Prop",11:"2nd row",12:"2nd row",13:"Lock"};
   var TEAM={Tit:"Titans",Sou:"Rabbitohs",Roo:"Roosters",Dol:"Dolphins",Cow:"Cowboys",
             Tig:"Tigers",War:"Warriors",Kni:"Knights",Eel:"Eels",Sha:"Sharks"};
-  // Players wearing each board number across the 5 weekend games (starting 1-13)
   var WEARERS={
     1:["Kini·Tit","Dufty·Sou","Tedesco·Roo","Tabuai-Fidow·Dol","Drinkwater·Cow","Bula·Tig","Tuaupiki·War","Ponga·Kni","Twidle·Eel","Kennedy·Sha"],
     2:["De Groot·Tit","Johnston·Sou","B.Smith·Roo","Isaako·Dol","Burns·Cow","Tupou·Tig","Laulilii·War","Hunt·Kni","Kelly·Eel","Katoa·Sha"],
@@ -181,31 +190,29 @@
     13:["Randall·Tit","Murray·Sou","Butcher·Roo","Knowles·Dol","Cotter·Cow","Seyfarth·Tig","Clark·War","Croker·Kni","Pryke·Eel","McInnes·Sha"]
   };
   var FIXTURES=[
-    {d:"Sat 29 Aug · 3:00",m:"Titans v Rabbitohs",v:"Cbus Super Stadium"},
-    {d:"Sat 29 Aug · 5:30",m:"Roosters v Dolphins",v:"Allianz Stadium"},
-    {d:"Sat 29 Aug · 7:30",m:"Cowboys v Tigers",v:"Qld Country Bank Stadium"},
-    {d:"Sun 30 Aug · 2:00",m:"Warriors v Knights",v:"Go Media Stadium"},
-    {d:"Sun 30 Aug · 4:05",m:"Eels v Sharks",v:"CommBank Stadium"}
+    {d:"Sat 29 Aug · 3:00 AEST",m:"Titans v Rabbitohs",v:"Cbus Super Stadium"},
+    {d:"Sat 29 Aug · 5:30 AEST",m:"Roosters v Dolphins",v:"Allianz Stadium"},
+    {d:"Sat 29 Aug · 7:30 AEST",m:"Cowboys v Tigers",v:"Qld Country Bank Stadium"},
+    {d:"Sun 30 Aug · 2:00 AEST",m:"Warriors v Knights",v:"Go Media Stadium"},
+    {d:"Sun 30 Aug · 4:05 AEST",m:"Eels v Sharks",v:"CommBank Stadium"}
   ];
 
   var $=function(id){return document.getElementById(id)};
-  var picks={}; // idx -> "Surname (Team)"
+  var picks={};  // number(str) -> "Surname (Team)"
   var grid=$("cardgrid");
-
   function fmt(entry){var p=entry.split("·");return p[0]+" ("+(TEAM[p[1]]||p[1])+")";}
+  var locked=Date.now()>=LOCK_UTC;
 
-  BOARD.forEach(function(num,idx){
-    var cell=document.createElement("div");
-    cell.className="sq";cell.dataset.idx=idx;
+  BOARD.forEach(function(num){
+    var cell=document.createElement("div");cell.className="sq";
     var opts='<option value="" selected>Pick a player…</option>'+
       (WEARERS[num]||[]).map(function(e){var v=fmt(e);return '<option value="'+v+'">'+v+'</option>'}).join("");
-    cell.innerHTML=
-      '<div><div class="pos">'+POS[num]+'</div><div class="num">'+num+'</div></div>'+
-      '<div class="selwrap"><select class="empty" aria-label="Pick a player for number '+num+'">'+opts+'</select></div>';
+    cell.innerHTML='<div><div class="pos">'+POS[num]+'</div><div class="num">'+num+'</div></div>'+
+      '<div class="selwrap"><select class="empty" aria-label="Player for number '+num+'"'+(locked?' disabled':'')+'>'+opts+'</select></div>';
     var sel=cell.querySelector("select");
     sel.addEventListener("change",function(){
-      if(sel.value){picks[idx]=sel.value;sel.classList.remove("empty");cell.classList.add("filled");}
-      else{delete picks[idx];sel.classList.add("empty");cell.classList.remove("filled");}
+      if(sel.value){picks[String(num)]=sel.value;sel.classList.remove("empty");cell.classList.add("filled");}
+      else{delete picks[String(num)];sel.classList.add("empty");cell.classList.remove("filled");}
       update();
     });
     grid.appendChild(cell);
@@ -216,46 +223,60 @@
     g.innerHTML='<div class="day">'+f.d+'</div><div class="mt">'+f.m+'</div><div class="vt">'+f.v+'</div>';
     $("fx").appendChild(g);
   });
-  BOARD.slice().sort(function(a,b){return a-b}).forEach(function(n){
-    var s=document.createElement("span");s.className="key";
-    s.innerHTML='<b>'+n+'</b>'+POS[n];$("key").appendChild(s);
-  });
 
-  function cardText(){
-    var lines=["🏉 My Footy Bingo card (Round 26):"];
-    BOARD.forEach(function(num,idx){ if(picks[idx]) lines.push(num+"  "+picks[idx]); });
+  function cardText(name){
+    var lines=["🏉 Footy Bingo card — "+name+":"];
+    BOARD.forEach(function(num){ if(picks[String(num)]) lines.push(num+"  "+picks[String(num)]); });
     return lines.join("\n");
   }
 
   function update(){
-    var n=Object.keys(picks).length, done=n===9;
-    $("count").innerHTML="<b>"+n+"</b> / 9 picked";
-    $("sendCard").disabled=!done; $("copyCard").disabled=!done;
-    $("hint").textContent=done ? "Card complete — send it to the group before Sat 3pm."
-      : ("Pick "+(9-n)+" more to complete your card.");
+    var n=Object.keys(picks).length, nm=$("playerName").value.trim(), ready=n===9&&nm&&!locked;
+    $("count2").innerHTML="<b>"+n+"</b> / 9 picked";
+    $("submitCard").disabled=!ready;
+    $("hint").textContent=locked?"Cards are locked — head to the live board to watch."
+      :(!nm?"Add your name to lock in.":(n<9?("Pick "+(9-n)+" more."):"Ready — lock it in."));
   }
+  $("playerName").addEventListener("input",update);
 
-  $("sendCard").addEventListener("click",function(){
-    if(Object.keys(picks).length<9) return;
-    window.open("https://wa.me/?text="+encodeURIComponent(cardText()),"_blank");
-  });
-  $("copyCard").addEventListener("click",function(){
-    if(Object.keys(picks).length<9) return;
-    var btn=$("copyCard");
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(cardText()).then(function(){
-        btn.textContent="Copied ✓";setTimeout(function(){btn.textContent="Copy card"},1600);
-      });
+  $("submitCard").addEventListener("click",function(){
+    var name=$("playerName").value.trim();
+    if(Object.keys(picks).length<9||!name||locked) return;
+    var btn=$("submitCard"); btn.disabled=true; btn.textContent="Locking in…";
+    var payload={name:name,picks:picks};
+    function confirmed(){
+      $("done").innerHTML="<b>You're in, "+name+"!</b> Your card's locked. Nobody sees anyone's picks until kickoff — then watch it light up on the <a href='results.html'>live board</a>.";
+      $("done").classList.add("show"); btn.textContent="Card locked ✓";
+    }
+    if(ENDPOINT){
+      fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
+        .then(function(){confirmed();})
+        .catch(function(){ // fallback to WhatsApp if the sheet call fails
+          window.open("https://wa.me/"+ORGANISER_WA+"?text="+encodeURIComponent(cardText(name)),"_blank");
+          confirmed();
+        });
+    }else{
+      window.open("https://wa.me/"+ORGANISER_WA+"?text="+encodeURIComponent(cardText(name)),"_blank");
+      confirmed();
     }
   });
 
-  $("themeBtn").addEventListener("click",function(){
-    var cur=document.documentElement.getAttribute("data-theme");
-    var next=cur==="dark"?"light":cur==="light"?"dark":
-      (window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark");
-    document.documentElement.setAttribute("data-theme",next);
-  });
+  // countdown
+  function tick(){
+    var diff=LOCK_UTC-Date.now();
+    if(diff<=0){ $("count").innerHTML='<span class="locked">🔒 Cards locked — head to the <a href="results.html">live board</a>.</span>'; return; }
+    var s=Math.floor(diff/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),ss=s%60;
+    $("cd").innerHTML=[["Days",d],["Hrs",h],["Min",m],["Sec",ss]].map(function(u){
+      return '<div class="u"><b>'+u[1]+'</b><span>'+u[0]+'</span></div>';}).join("");
+    setTimeout(tick,1000);
+  }
+  tick();
 
+  $("themeBtn").addEventListener("click",function(){
+    var c=document.documentElement.getAttribute("data-theme");
+    document.documentElement.setAttribute("data-theme",
+      c==="dark"?"light":c==="light"?"dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark"));
+  });
   update();
 })();
 </script>
