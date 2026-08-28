@@ -1,7 +1,7 @@
 {
   "round": "Round 26 · Trial",
-  "lock_utc": "2026-08-29T05:00:00Z",
-  "lock_label": "Sat 5:00pm NZT",
+  "lock_utc": "2026-08-29T04:00:00Z",
+  "lock_label": "Sat 4:00pm NZT (1hr before kickoff)",
   "endpoint": "https://script.google.com/macros/s/AKfycbwAZ8TcqCPl2VHXxe4oFTv5qzDaUsHrBvPFpGUbWX3XTV4-M6wnisTKhLW4t6tqfQfj/exec",
   "pot_note": "Trial week is free. Finals: $10 in, winner takes the pot.",
   "board": [9, 10, 3, 7, 2, 12, 1, 5, 13],
@@ -23,5 +23,5 @@
     "12": ["Fotuaika·Tit", "Aitken·Sou", "Wong·Roo", "Finefeuiaki·Dol", "Nanai·Cow", "Sukkar·Tig", "Laban·War", "Manuleleua·Kni", "Kautoga·Eel", "Wilton·Sha"],
     "13": ["Randall·Tit", "Murray·Sou", "Butcher·Roo", "Knowles·Dol", "Cotter·Cow", "Seyfarth·Tig", "Clark·War", "Croker·Kni", "Pryke·Eel", "McInnes·Sha"]
   },
-  "scored": ["Tedesco (Roosters)", "Moses (Eels)", "Brailey (Sharks)", "Clark (Warriors)", "Johnston (Rabbitohs)"]
+  "scored": []
 }
