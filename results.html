@@ -3,194 +3,196 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800&display=swap">
 <style>
-  :root{
-    --ground:#F1F4F9; --surface:#FFFFFF; --surface-2:#F7F9FC;
-    --ink:#16203A; --muted:#5C6780; --line:#DBE1EC;
-    --accent:#D99500; --accent-ink:#3A2A00; --accent-soft:#FBEECB;
-    --field:#158A4A; --field-soft:#DCF3E5; --field-ink:#0B3D22;
-    --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 26px rgba(16,24,40,.07);
-  }
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --ground:#0C1220; --surface:#151F36; --surface-2:#0F1830;
-    --ink:#EAF0F8; --muted:#93A0B8; --line:#26324C;
-    --accent:#F4B62C; --accent-ink:#1A1200; --accent-soft:#2C2412;
-    --field:#2BB56A; --field-soft:#123A28; --field-ink:#BDF6D3;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}}
-  :root[data-theme="dark"]{
-    --ground:#0C1220; --surface:#151F36; --surface-2:#0F1830;
-    --ink:#EAF0F8; --muted:#93A0B8; --line:#26324C;
-    --accent:#F4B62C; --accent-ink:#1A1200; --accent-soft:#2C2412;
-    --field:#2BB56A; --field-soft:#123A28; --field-ink:#BDF6D3;
+  :root{--ground:#F1F4F9;--surface:#FFFFFF;--surface-2:#F7F9FC;--ink:#16203A;--muted:#5C6780;--line:#DBE1EC;
+    --accent:#D99500;--accent-ink:#3A2A00;--accent-soft:#FBEECB;--field:#158A4A;--field-soft:#DCF3E5;--field-ink:#0B3D22;
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 26px rgba(16,24,40,.07);}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#0C1220;--surface:#151F36;--surface-2:#0F1830;
+    --ink:#EAF0F8;--muted:#93A0B8;--line:#26324C;--accent:#F4B62C;--accent-ink:#1A1200;--accent-soft:#2C2412;
+    --field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}}
+  :root[data-theme="dark"]{--ground:#0C1220;--surface:#151F36;--surface-2:#0F1830;--ink:#EAF0F8;--muted:#93A0B8;--line:#26324C;
+    --accent:#F4B62C;--accent-ink:#1A1200;--accent-soft:#2C2412;--field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);
-    font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
   .wrap{max-width:1140px;margin:0 auto;padding:26px 18px 70px}
   .bebas{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.02em;line-height:.95}
-
+  a{color:var(--accent)}
   header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
   .kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
-  h1{margin:.08em 0 .1em;font-size:clamp(2.6rem,7vw,4.4rem)}
-  h1 .of{color:var(--accent)}
+  h1{margin:.08em 0 .1em;font-size:clamp(2.6rem,7vw,4.4rem)}h1 .of{color:var(--accent)}
   .sub{color:var(--muted);font-size:.95rem;max-width:60ch;margin:0}
-  .themetoggle{border:1px solid var(--line);background:var(--surface);color:var(--muted);
-    border-radius:999px;padding:8px 14px;font:inherit;font-size:.82rem;cursor:pointer}
-
-  /* scorer ticker */
-  .ticker{margin:20px 0 8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;
-    padding:11px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow)}
-  .ticker .lbl{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--field);font-weight:800;
-    background:var(--field-soft);padding:4px 8px;border-radius:6px}
-  .ticker .t{font-size:.82rem;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;
-    padding:3px 10px;color:var(--ink)}
+  .themetoggle{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:8px 14px;font:inherit;font-size:.82rem;cursor:pointer}
+  .btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;font-size:.85rem;text-decoration:none;display:inline-block}
+  /* lock screen */
+  .lockwrap{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:44px 26px;text-align:center;box-shadow:var(--shadow)}
+  .lockwrap .ic{font-size:2.4rem}
+  .lockwrap h2{font-size:2.4rem;margin:8px 0 4px}
+  .lockwrap p{color:var(--muted);margin:0 auto 18px;max-width:44ch}
+  .cd{display:inline-flex;gap:8px;margin-top:6px}
+  .cd .u{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:56px}
+  .cd .u b{font-family:"Bebas Neue",sans-serif;font-size:2rem;display:block;line-height:1}
+  .cd .u span{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .inpill{margin-top:20px;display:inline-block;background:var(--field-soft);color:var(--field-ink);border:1px solid var(--field);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.85rem}
+  /* results */
+  .ticker{margin:20px 0 8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow)}
+  .ticker .lbl{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--field);font-weight:800;background:var(--field-soft);padding:4px 8px;border-radius:6px}
+  .ticker .t{font-size:.82rem;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
   .ticker .t b{color:var(--field)}
-
-  /* leaderboard */
-  .lead{margin:16px 0 22px}
-  .lead h2{font-size:1.5rem;margin:0 0 10px}
-  .lrow{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
-    border-radius:12px;padding:10px 14px;margin-bottom:7px;box-shadow:var(--shadow)}
+  .lead{margin:16px 0 22px}.lead h2{font-size:1.5rem;margin:0 0 10px}
+  .lrow{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:7px;box-shadow:var(--shadow)}
   .lrow .rank{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;color:var(--muted);width:26px;text-align:center}
-  .lrow.win{border-color:var(--accent);background:var(--accent-soft)}
-  .lrow.win .rank{color:var(--accent)}
+  .lrow.win{border-color:var(--accent);background:var(--accent-soft)}.lrow.win .rank{color:var(--accent)}
   .lrow .who{font-weight:800;font-size:1.02rem}
-  .lrow .meta{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .lrow .meta{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
   .chip{font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;border:1px solid var(--line);color:var(--muted)}
-  .chip.hits{background:var(--surface-2)}
-  .chip.line{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-
-  /* cards grid */
+  .chip.hits{background:var(--surface-2)}.chip.line{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
-  .person{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);
-    position:relative;overflow:hidden}
+  .person{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .person.bingo{border-color:var(--accent)}
-  .person .name{font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+  .person .name{font-weight:800;font-size:1.1rem}
   .person .status{font-size:.72rem;color:var(--muted);margin:1px 0 12px}
-  .ribbon{position:absolute;top:12px;right:-34px;transform:rotate(45deg);background:var(--accent);color:var(--accent-ink);
-    font-weight:800;font-size:.64rem;letter-spacing:.1em;padding:3px 40px}
+  .ribbon{position:absolute;top:12px;right:-34px;transform:rotate(45deg);background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:.64rem;letter-spacing:.1em;padding:3px 40px}
   .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-  .mc{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:7px 6px;min-height:60px;
-    display:flex;flex-direction:column;justify-content:space-between}
+  .mc{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:7px 6px;min-height:60px;display:flex;flex-direction:column;justify-content:space-between}
   .mc .n{font-family:"Bebas Neue",sans-serif;font-size:1.1rem;color:var(--muted);line-height:.8}
   .mc .pl{font-size:.68rem;font-weight:700;color:var(--ink);line-height:1.05;word-break:break-word}
-  .mc.lit{background:var(--field-soft);border-color:var(--field)}
-  .mc.lit .n{color:var(--field)}
-  .mc.lit .pl{color:var(--field-ink)}
+  .mc.lit{background:var(--field-soft);border-color:var(--field)}.mc.lit .n{color:var(--field)}.mc.lit .pl{color:var(--field-ink)}
   .mc.inwin{box-shadow:inset 0 0 0 2px var(--accent)}
-
   .note{margin-top:26px;color:var(--muted);font-size:.82rem;text-align:center;line-height:1.7}
+  #boot{padding:44px 0;text-align:center;color:var(--muted)}
   footer{margin-top:14px;color:var(--muted);font-size:.76rem;text-align:center}
 </style>
 
 <div class="wrap">
   <header class="top">
     <div>
-      <div class="kicker" id="kicker">Live Board · Round 26 · SAMPLE</div>
+      <div class="kicker" id="kicker">Live Board</div>
       <h1 class="bebas">Live <span class="of">Board</span></h1>
       <p class="sub">Every card, live. Squares light as each player's pick scores a try. Three-in-a-row takes the week.</p>
     </div>
     <button class="themetoggle" id="themeBtn">◐ Theme</button>
   </header>
-
-  <div class="ticker" id="ticker"></div>
-  <section class="lead"><h2 class="bebas">Leaderboard</h2><div id="leaderboard"></div></section>
-  <section><div class="cards" id="cards"></div></section>
-
-  <p class="note" id="note"></p>
-  <footer>NRL Footy Bingo · live board regenerates as tries are logged.</footer>
+  <div id="boot">Loading…</div>
+  <div id="stage"></div>
+  <footer>NRL Footy Bingo · <a href="index.html">Build a card</a></footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var BOARD=[9,10,3, 7,2,12, 1,5,13];
-  var LINES=[["Row 1",[0,1,2]],["Row 2",[3,4,5]],["Row 3",[6,7,8]],
-             ["Col 1",[0,3,6]],["Col 2",[1,4,7]],["Col 3",[2,5,8]],
-             ["Diag ↘",[0,4,8]],["Diag ↗",[2,4,6]]];
-
-  // ===== DATA (swap this block when regenerating from the sheet) =====
-  var LIVE=false;                       // false = sample/preview
-  var SCORED=[                          // players who have scored a try
-    "Tedesco (Roosters)","Johnston (Rabbitohs)","Mulitalo (Sharks)",
-    "Moses (Eels)","Brailey (Sharks)","Taumalolo (Cowboys)"];
-  var ENTRIES=[
-    {name:"Dave", picks:{"9":"Brailey (Sharks)","10":"Taumalolo (Cowboys)","3":"Savala (Roosters)",
-      "7":"Moses (Eels)","2":"Johnston (Rabbitohs)","12":"Aitken (Rabbitohs)",
-      "1":"Tedesco (Roosters)","5":"Mulitalo (Sharks)","13":"Murray (Rabbitohs)"}},
-    {name:"Mitch", picks:{"9":"Brailey (Sharks)","10":"Paulo (Eels)","3":"Brimson (Titans)",
-      "7":"Moses (Eels)","2":"Hunt (Knights)","12":"Wong (Roosters)",
-      "1":"Tedesco (Roosters)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}},
-    {name:"Priya", picks:{"9":"Robson (Roosters)","10":"Paulo (Eels)","3":"Brimson (Titans)",
-      "7":"Hynes (Sharks)","2":"Hunt (Knights)","12":"Wong (Roosters)",
-      "1":"Ponga (Knights)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}},
-    {name:"Sam", picks:{"9":"Koroisau (Tigers)","10":"Taumalolo (Cowboys)","3":"Gagai (Knights)",
-      "7":"Dearden (Cowboys)","2":"Johnston (Rabbitohs)","12":"Nanai (Cowboys)",
-      "1":"Drinkwater (Cowboys)","5":"Mulitalo (Sharks)","13":"Cotter (Cowboys)"}}
-  ];
-  // ==================================================================
-
+  var POS={1:"Fullback",2:"Wing",3:"Centre",4:"Centre",5:"Wing",6:"Five-eighth",7:"Halfback",8:"Prop",9:"Hooker",10:"Prop",11:"2nd row",12:"2nd row",13:"Lock"};
   var $=function(id){return document.getElementById(id)};
-  function norm(s){return s.toLowerCase().replace(/[’'.\-]/g," ").replace(/\s+/g," ").trim();}
-  function key(p){var m=/^(.*?)\s*\((.*)\)\s*$/.exec(p);var nm=m?m[1]:p,tm=m?m[2]:"";
-    return norm(nm).split(" ").pop()+"|"+norm(tm);}
-  var scoredKeys={};SCORED.forEach(function(p){scoredKeys[key(p)]=true;});
-  function scored(pick){return !!scoredKeys[key(pick)];}
-
-  function evalCard(e){
-    var lit={};
-    BOARD.forEach(function(num,idx){var p=e.picks[String(num)];if(p&&scored(p))lit[idx]=true;});
-    var lines=LINES.filter(function(L){return L[1].every(function(i){return lit[i];})}).map(function(L){return L[0]});
-    var winset={};lines.forEach(function(nm){var L=LINES.find(function(x){return x[0]===nm});L[1].forEach(function(i){winset[i]=1;})});
-    return {lit:lit,lines:lines,hits:Object.keys(lit).length,winset:winset};
-  }
-
-  // ticker
-  var tk=$("ticker");
-  tk.innerHTML='<span class="lbl">Tries in</span>'+(SCORED.length?
-    SCORED.map(function(p){var m=/^(.*?)\s*\((.*)\)/.exec(p);return '<span class="t"><b>'+(m?m[1]:p)+'</b> '+(m?m[2]:"")+'</span>';}).join(""):
-    '<span class="t">None yet — kicks off Sat 3pm</span>');
-
-  // build + rank
-  var rows=ENTRIES.map(function(e){return {e:e,r:evalCard(e)}});
-  rows.sort(function(a,b){return (b.r.lines.length-a.r.lines.length)||(b.r.hits-a.r.hits)||a.e.name.localeCompare(b.e.name);});
-
-  // leaderboard
-  var lb=$("leaderboard");
-  rows.forEach(function(row,i){
-    var win=row.r.lines.length>0;
-    var d=document.createElement("div");d.className="lrow"+(win?" win":"");
-    var meta='<span class="chip hits">'+row.r.hits+'/9 lit</span>'+
-      (win?'<span class="chip line">'+row.r.lines.length+' line'+(row.r.lines.length>1?'s':'')+'</span>':'');
-    d.innerHTML='<span class="rank">'+(i+1)+'</span><span class="who">'+row.e.name+'</span><span class="meta">'+meta+'</span>';
-    lb.appendChild(d);
-  });
-
-  // cards
-  var cg=$("cards");
-  rows.forEach(function(row){
-    var e=row.e,r=row.r,win=r.lines.length>0;
-    var card=document.createElement("div");card.className="person"+(win?" bingo":"");
-    var mini="";
-    BOARD.forEach(function(num,idx){
-      var p=e.picks[String(num)]||"";var nm=(/^(.*?)\s*\(/.exec(p)||[])[1]||p||"—";
-      var cls="mc"+(r.lit[idx]?" lit":"")+(r.winset[idx]?" inwin":"");
-      mini+='<div class="'+cls+'"><div class="n">'+num+'</div><div class="pl">'+nm+'</div></div>';
-    });
-    card.innerHTML=(win?'<div class="ribbon">BINGO</div>':'')+
-      '<div class="name">'+e.name+'</div>'+
-      '<div class="status">'+(win?('Three-in-a-row: '+r.lines.join(", ")):(r.hits+' / 9 squares lit'))+'</div>'+
-      '<div class="mini">'+mini+'</div>';
-    cg.appendChild(card);
-  });
-
-  if(!LIVE){
-    $("note").innerHTML="This is a <b>preview with sample cards</b> so you can see the live board. Once your mates' cards land in the sheet, this fills with their real names and picks — and lights up through the weekend as players score.";
-  }
+  var PREVIEW=/[?&]preview/.test(location.search);
+  var CFG=null, BOARD=[], LINES=[];
 
   $("themeBtn").addEventListener("click",function(){
     var c=document.documentElement.getAttribute("data-theme");
-    document.documentElement.setAttribute("data-theme",
-      c==="dark"?"light":c==="light"?"dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark"));
+    document.documentElement.setAttribute("data-theme",c==="dark"?"light":c==="light"?"dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark"));
   });
+
+  fetch("config.json?v="+Date.now()).then(function(r){return r.json();}).then(start).catch(function(){$("boot").textContent="Couldn't load. Refresh in a moment.";});
+
+  function start(cfg){
+    CFG=cfg; BOARD=cfg.board;
+    LINES=[["Row 1",[0,1,2]],["Row 2",[3,4,5]],["Row 3",[6,7,8]],["Col 1",[0,3,6]],["Col 2",[1,4,7]],["Col 3",[2,5,8]],["Diag ↘",[0,4,8]],["Diag ↗",[2,4,6]]];
+    $("kicker").textContent="Live Board · "+cfg.round;
+    var LOCK=Date.parse(cfg.lock_utc), locked=Date.now()>=LOCK;
+    $("boot").style.display="none";
+    if(!locked && !PREVIEW){ lockScreen(LOCK); return; }
+    loadEntries();
+  }
+
+  function lockScreen(LOCK){
+    var st=$("stage");
+    st.innerHTML='<div class="lockwrap"><div class="ic">🔒</div><h2 class="bebas">Cards are locked in</h2>'+
+      '<p>Everyone\'s picks stay hidden until kickoff. This board reveals every card at <b>'+CFG.lock_label+'</b> and lights up as tries go in.</p>'+
+      '<div class="cd" id="cd"></div><div><span class="inpill" id="inpill">&nbsp;</span></div>'+
+      '<div style="margin-top:22px"><a class="btn" href="index.html">Build your card</a></div></div>';
+    (function tick(){
+      var diff=LOCK-Date.now();
+      if(diff<=0){ location.reload(); return; }
+      var s=Math.floor(diff/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),ss=s%60;
+      $("cd").innerHTML=[["Days",d],["Hrs",h],["Min",m],["Sec",ss]].map(function(u){return '<div class="u"><b>'+u[1]+'</b><span>'+u[0]+'</span></div>';}).join("");
+      setTimeout(tick,1000);
+    })();
+    // show how many are in (count only — no picks revealed)
+    fetchEntries(function(entries){
+      if(entries&&entries.length){$("inpill").textContent=entries.length+" card"+(entries.length>1?"s":"")+" locked in";}
+      else{$("inpill").style.display="none";}
+    });
+  }
+
+  function fetchEntries(cb){
+    if(PREVIEW && !CFG.endpoint){ return cb(SAMPLE()); }
+    if(!CFG.endpoint){ return cb([]); }
+    var name="__cb"+Math.floor(Math.random()*1e6);
+    var done=false;
+    window[name]=function(data){done=true;cb((data&&data.entries)||[]);try{delete window[name];}catch(e){}};
+    var s=document.createElement("script");
+    s.src=CFG.endpoint+"?callback="+name+"&v="+Date.now();
+    s.onerror=function(){if(!done)cb(null);};
+    document.body.appendChild(s);
+    setTimeout(function(){if(!done)cb(null);},8000);
+  }
+
+  function loadEntries(){
+    $("stage").innerHTML='<div id="boot2" style="padding:30px 0;text-align:center;color:var(--muted)">Loading cards…</div>';
+    fetchEntries(function(entries){
+      if(entries===null){ $("stage").innerHTML='<p class="note">Couldn\'t reach the card store. Refresh in a moment.</p>'; return; }
+      if(PREVIEW && !entries.length){ entries=SAMPLE(); }
+      render(entries);
+    });
+  }
+
+  function norm(s){return String(s||"").toLowerCase().replace(/[’'.\-]/g," ").replace(/\s+/g," ").trim();}
+  function key(p){var m=/^(.*?)\s*\((.*)\)\s*$/.exec(p);var nm=m?m[1]:p,tm=m?m[2]:"";return norm(nm).split(" ").pop()+"|"+norm(tm);}
+
+  function render(entries){
+    var scoredKeys={}; (CFG.scored||[]).forEach(function(p){scoredKeys[key(p)]=true;});
+    function evalCard(e){
+      var lit={};
+      BOARD.forEach(function(num,idx){var p=e.picks[String(num)];if(p&&scoredKeys[key(p)])lit[idx]=true;});
+      var lines=LINES.filter(function(L){return L[1].every(function(i){return lit[i];});}).map(function(L){return L[0];});
+      var winset={};lines.forEach(function(nm){var L=LINES.find(function(x){return x[0]===nm;});L[1].forEach(function(i){winset[i]=1;});});
+      return {lit:lit,lines:lines,hits:Object.keys(lit).length,winset:winset};
+    }
+    var rows=entries.map(function(e){return {e:e,r:evalCard(e)};});
+    rows.sort(function(a,b){return (b.r.lines.length-a.r.lines.length)||(b.r.hits-a.r.hits)||String(a.e.name).localeCompare(b.e.name);});
+
+    var scored=CFG.scored||[];
+    var tk='<div class="ticker"><span class="lbl">Tries in</span>'+(scored.length?
+      scored.map(function(p){var m=/^(.*?)\s*\((.*)\)/.exec(p);return '<span class="t"><b>'+(m?m[1]:p)+'</b> '+(m?m[2]:"")+'</span>';}).join(""):
+      '<span class="t">None yet</span>')+'</div>';
+
+    var lb='<section class="lead"><h2 class="bebas">Leaderboard</h2>'+rows.map(function(row,i){
+      var win=row.r.lines.length>0;
+      return '<div class="lrow'+(win?" win":"")+'"><span class="rank">'+(i+1)+'</span><span class="who">'+esc(row.e.name)+'</span>'+
+        '<span class="meta"><span class="chip hits">'+row.r.hits+'/9 lit</span>'+(win?'<span class="chip line">'+row.r.lines.length+' line'+(row.r.lines.length>1?'s':'')+'</span>':'')+'</span></div>';
+    }).join("")+'</section>';
+
+    var cards='<section><div class="cards">'+rows.map(function(row){
+      var e=row.e,r=row.r,win=r.lines.length>0,mini="";
+      BOARD.forEach(function(num,idx){
+        var p=e.picks[String(num)]||"";var nm=(/^(.*?)\s*\(/.exec(p)||[])[1]||p||"—";
+        mini+='<div class="mc'+(r.lit[idx]?" lit":"")+(r.winset[idx]?" inwin":"")+'"><div class="n">'+num+'</div><div class="pl">'+esc(nm)+'</div></div>';
+      });
+      return '<div class="person'+(win?" bingo":"")+'">'+(win?'<div class="ribbon">BINGO</div>':'')+
+        '<div class="name">'+esc(e.name)+'</div><div class="status">'+(win?('Three-in-a-row: '+r.lines.join(", ")):(r.hits+' / 9 squares lit'))+'</div>'+
+        '<div class="mini">'+mini+'</div></div>';
+    }).join("")+'</div></section>';
+
+    var note = rows.length? "" : '<p class="note">No cards in yet.</p>';
+    $("stage").innerHTML=tk+lb+cards+note+(PREVIEW?'<p class="note"><b>Preview mode</b> — sample cards. The real board reveals your mates\' cards at kickoff.</p>':'');
+    // auto-refresh scores/cards every 60s once live
+    if(!PREVIEW) setTimeout(loadEntries,60000);
+  }
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  function SAMPLE(){return [
+    {name:"Dave",picks:{"9":"Brailey (Sharks)","10":"Taumalolo (Cowboys)","3":"Savala (Roosters)","7":"Moses (Eels)","2":"Johnston (Rabbitohs)","12":"Aitken (Rabbitohs)","1":"Tedesco (Roosters)","5":"Mulitalo (Sharks)","13":"Murray (Rabbitohs)"}},
+    {name:"Mitch",picks:{"9":"Brailey (Sharks)","10":"Paulo (Eels)","3":"Brimson (Titans)","7":"Moses (Eels)","2":"Hunt (Knights)","12":"Wong (Roosters)","1":"Tedesco (Roosters)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}},
+    {name:"Priya",picks:{"9":"Robson (Roosters)","10":"Paulo (Eels)","3":"Brimson (Titans)","7":"Hynes (Sharks)","2":"Hunt (Knights)","12":"Wong (Roosters)","1":"Ponga (Knights)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}}
+  ];}
 })();
 </script>
