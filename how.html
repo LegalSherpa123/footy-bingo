@@ -1,0 +1,212 @@
+<title>How Footy Bingo Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{--ground:#0C1220;--panel:#151F36;--panel2:#0F1830;--ink:#EAF0F8;--muted:#93A0B8;--line:#26324C;
+    --accent:#F4B62C;--accent-ink:#1A1200;--field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:radial-gradient(120% 80% at 50% -10%,#1a2540 0%,var(--ground) 55%);color:var(--ink);
+    font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden;
+    display:flex;align-items:center;justify-content:center}
+  .bebas{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.03em;line-height:.9}
+  .stage{position:relative;width:min(560px,94vw);aspect-ratio:9/12;max-height:94vh;
+    background:var(--panel);border:1px solid var(--line);border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .prog{position:absolute;top:0;left:0;height:4px;background:var(--accent);width:0;z-index:6;transition:width .25s linear}
+  .brand{position:absolute;top:16px;left:20px;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:800;z-index:5}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:44px 30px;opacity:0;transform:translateY(14px);pointer-events:none;
+    transition:opacity .5s ease,transform .5s ease}
+  .scene.on{opacity:1;transform:none;pointer-events:auto}
+  .eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
+  h1{font-size:clamp(3rem,13vw,5rem)}h1 .of{color:var(--accent)}
+  h2{font-size:clamp(1.7rem,6.5vw,2.4rem);line-height:1.05;text-wrap:balance}
+  h2 em{color:var(--accent);font-style:normal}
+  h2 .grn{color:var(--field)}
+  p.big{color:var(--muted);font-size:1.05rem;margin-top:14px;max-width:30ch}
+  /* board */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px;width:min(300px,72%)}
+  .cell{aspect-ratio:1;background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .45s ease}
+  .cell .num{font-family:"Bebas Neue",sans-serif;font-size:2rem;color:var(--ink)}
+  .cell .pl{font-size:.56rem;font-weight:700;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+  .cell.pop{animation:pop .4s ease both}
+  .cell.lit{background:var(--field-soft);border-color:var(--field)}
+  .cell.lit .num{color:var(--field-ink)}.cell.lit .pl{color:var(--field)}
+  .cell.win{box-shadow:0 0 0 3px var(--accent),0 0 22px rgba(244,182,44,.4);border-color:var(--accent)}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+  .ribbon{margin-top:20px;background:var(--accent);color:var(--accent-ink);font-weight:800;letter-spacing:.14em;
+    padding:8px 22px;border-radius:999px;font-size:1.1rem;opacity:0;transform:scale(.7);transition:all .4s ease}
+  .ribbon.show{opacity:1;transform:none}
+  /* position reveal */
+  .posrow{display:flex;align-items:center;gap:16px;margin-top:20px}
+  .bignum{font-family:"Bebas Neue",sans-serif;font-size:5rem;color:var(--accent);line-height:1}
+  .posname{text-align:left}
+  .posname .r{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .posname .n{font-size:1.5rem;font-weight:800}
+  .posname .who{color:var(--field);font-weight:700;margin-top:2px;opacity:0;transition:opacity .4s .3s}
+  .scene.on .posname .who{opacity:1}
+  /* pot split */
+  .pot{display:flex;gap:14px;margin-top:24px;width:min(320px,80%)}
+  .slice{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;flex:0}
+  .slice.a{flex:2;border-color:var(--accent)}.slice.b{flex:1;border-color:var(--field)}
+  .slice .name{font-weight:800}.slice .amt{font-family:"Bebas Neue",sans-serif;font-size:1.8rem;margin-top:4px}
+  .slice.a .amt{color:var(--accent)}.slice.b .amt{color:var(--field)}
+  .slice .sub{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  /* weekly */
+  .weeks{display:flex;gap:10px;margin-top:22px}
+  .wk{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;width:60px}
+  .wk .t{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .wk .b{font-family:"Bebas Neue",sans-serif;font-size:1.3rem;color:var(--accent);margin-top:3px}
+  /* cta */
+  .cta a{display:inline-block;margin-top:20px;background:var(--accent);color:var(--accent-ink);text-decoration:none;
+    font-weight:800;padding:14px 26px;border-radius:12px;font-size:1.05rem}
+  .free{margin-top:14px;color:var(--field);font-weight:700}
+  .controls{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:10px;z-index:6}
+  .controls button{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);
+    border-radius:999px;padding:8px 16px;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:opacity .2s!important}}
+</style>
+
+<div class="stage" id="stage">
+  <div class="prog" id="prog"></div>
+  <div class="brand">🏉 Footy Bingo</div>
+
+  <!-- S1 -->
+  <section class="scene" data-t="3200">
+    <div class="eyebrow">A weekly game for the footy finals</div>
+    <h1 class="bebas">Footy <span class="of">Bingo</span></h1>
+    <p class="big">Here's how it works — in 30 seconds.</p>
+  </section>
+
+  <!-- S2 -->
+  <section class="scene" data-t="4200">
+    <h2>Everyone gets the <em>same 9 numbers</em>.</h2>
+    <div class="board" id="b2"></div>
+    <p class="big">Each number is a jersey — a position on the field.</p>
+  </section>
+
+  <!-- S3 -->
+  <section class="scene" data-t="4600">
+    <h2>Pick <em>one player</em> for each number.</h2>
+    <div class="posrow">
+      <div class="bignum">1</div>
+      <div class="posname"><div class="r">Number 1 =</div><div class="n">Fullback</div><div class="who">→ you pick Tedesco</div></div>
+    </div>
+    <p class="big">Anyone wearing that number, from any game this week.</p>
+  </section>
+
+  <!-- S4 -->
+  <section class="scene" data-t="4200">
+    <h2>Your player scores a try?<br><span class="grn">Your square lights up.</span></h2>
+    <div class="board" id="b4"></div>
+  </section>
+
+  <!-- S5 -->
+  <section class="scene" data-t="5200">
+    <h2>Three in a row = <em>BINGO</em>.</h2>
+    <div class="board" id="b5"></div>
+    <div class="ribbon" id="rib5">🏆 BINGO</div>
+  </section>
+
+  <!-- S6 -->
+  <section class="scene" data-t="4600">
+    <h2>Land <em>two lines?</em><br>Bigger slice of the pot.</h2>
+    <div class="pot">
+      <div class="slice a"><div class="name">You</div><div class="amt">⅔</div><div class="sub">2 lines</div></div>
+      <div class="slice b"><div class="name">Mate</div><div class="amt">⅓</div><div class="sub">1 line</div></div>
+    </div>
+    <p class="big">The pot splits by total three-in-a-rows.</p>
+  </section>
+
+  <!-- S7 -->
+  <section class="scene" data-t="4400">
+    <div class="eyebrow">Long term</div>
+    <h2>New board <em>every week</em> through the finals.</h2>
+    <div class="weeks">
+      <div class="wk"><div class="t">Finals wk 1</div><div class="b">🏉</div></div>
+      <div class="wk"><div class="t">Wk 2</div><div class="b">🏉</div></div>
+      <div class="wk"><div class="t">Prelim</div><div class="b">🏉</div></div>
+      <div class="wk"><div class="t">Grand final</div><div class="b">🏆</div></div>
+    </div>
+    <p class="big">Cards lock before kickoff. $10 in — winner takes the week.</p>
+  </section>
+
+  <!-- S8 -->
+  <section class="scene" data-t="5200">
+    <div class="eyebrow">This weekend is a free trial</div>
+    <h2>Build your card.<br>Watch it <span class="grn">light up live</span>.</h2>
+    <div class="cta"><a href="index.html">🏉 Build your card</a></div>
+    <div class="free">Trial week — no money, just get a card in 🍻</div>
+  </section>
+
+  <div class="controls">
+    <button id="replay">↺ Replay</button>
+    <button id="pause">❚❚ Pause</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var scenes=[].slice.call(document.querySelectorAll(".scene"));
+  var prog=document.getElementById("prog"), idx=-1, timer=null, paused=false, start=0, dur=0, raf=null;
+
+  function buildBoard(el,nums,litIdx,winIdx,seq){
+    el.innerHTML="";
+    nums.forEach(function(n,i){
+      var c=document.createElement("div");c.className="cell";
+      c.innerHTML='<div class="num">'+n+'</div>';
+      el.appendChild(c);
+    });
+    return el.children;
+  }
+  var B=[9,10,3,7,2,12,1,5,13];
+
+  function activate(i){
+    scenes.forEach(function(s,k){s.classList.toggle("on",k===i);});
+    var s=scenes[i];
+    // scene-specific animations
+    if(s.querySelector("#b2")){ var cs=buildBoard(document.getElementById("b2"),B); step(cs,function(c){c.classList.add("pop");},90); }
+    if(s.querySelector("#b4")){
+      var cs=buildBoard(document.getElementById("b4"),B);
+      // light the '1' square (index 6) after a beat
+      setTimeout(function(){cs[6].classList.add("lit");cs[6].querySelector(".num").insertAdjacentHTML("afterend",'<div class="pl">TEDESCO ✓</div>');},900);
+    }
+    if(s.querySelector("#b5")){
+      var cs=buildBoard(document.getElementById("b5"),B);
+      var col=[0,3,6]; // Col 1 = 9,7,1
+      col.forEach(function(ci,k){ setTimeout(function(){cs[ci].classList.add("lit");},700+k*700); });
+      setTimeout(function(){col.forEach(function(ci){cs[ci].classList.add("win");});document.getElementById("rib5").classList.add("show");},700+3*700);
+    }
+  }
+  function step(list,fn,gap){ [].slice.call(list).forEach(function(c,i){ setTimeout(function(){fn(c);},i*gap); }); }
+
+  function next(){ idx=(idx+1)%scenes.length; if(idx===0 && arguments[0]!=="loop0"){} run(); }
+  function run(){
+    var s=scenes[idx]; dur=parseInt(s.getAttribute("data-t"),10)||4000; start=performance.now();
+    activate(idx);
+    tickProg();
+    clearTimeout(timer);
+    timer=setTimeout(function(){ next(); }, dur);
+  }
+  function tickProg(){
+    cancelAnimationFrame(raf);
+    (function loop(){
+      if(paused){return;}
+      var frac=Math.min(1,(performance.now()-start)/dur);
+      var overall=(idx+frac)/scenes.length;
+      prog.style.width=(overall*100)+"%";
+      if(frac<1) raf=requestAnimationFrame(loop);
+    })();
+  }
+  document.getElementById("replay").onclick=function(){ idx=-1; paused=false; document.getElementById("pause").textContent="❚❚ Pause"; next(); };
+  document.getElementById("pause").onclick=function(){
+    paused=!paused; this.textContent=paused?"▶ Play":"❚❚ Pause";
+    if(paused){clearTimeout(timer);var elapsed=performance.now()-start;dur=dur-elapsed;}
+    else{start=performance.now();timer=setTimeout(next,dur);tickProg();}
+  };
+  next();
+})();
+</script>
