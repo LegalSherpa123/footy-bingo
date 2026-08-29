@@ -122,12 +122,16 @@
     });
   }
 
+  function filt(arr){
+    var ex=CFG.exclude||[];
+    return (arr||[]).filter(function(e){var s=String(e.submitted||"");return !ex.some(function(p){return s.indexOf(p)===0;});});
+  }
   function fetchEntries(cb){
     if(PREVIEW && !CFG.endpoint){ return cb(SAMPLE()); }
     if(!CFG.endpoint){ return cb([]); }
     var name="__cb"+Math.floor(Math.random()*1e6);
     var done=false;
-    window[name]=function(data){done=true;cb((data&&data.entries)||[]);try{delete window[name];}catch(e){}};
+    window[name]=function(data){done=true;cb(filt((data&&data.entries)||[]));try{delete window[name];}catch(e){}};
     var s=document.createElement("script");
     s.src=CFG.endpoint+"?callback="+name+"&v="+Date.now();
     s.onerror=function(){if(!done)cb(null);};
