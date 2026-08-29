@@ -3,26 +3,167 @@
   "lock_utc": "2026-08-29T04:00:00Z",
   "lock_label": "Sat 4:00pm NZT (1hr before kickoff)",
   "endpoint": "https://script.google.com/macros/s/AKfycbwAZ8TcqCPl2VHXxe4oFTv5qzDaUsHrBvPFpGUbWX3XTV4-M6wnisTKhLW4t6tqfQfj/exec",
-  "exclude": ["2026-08-28T12:00:20", "2026-08-28T12:05:49", "2026-08-28T12:05:51"],
+  "exclude": [
+    "2026-08-28T12:00:20",
+    "2026-08-28T12:05:49",
+    "2026-08-28T12:05:51"
+  ],
   "pot_note": "Trial week is free. Finals: $10 in, winner takes the pot.",
-  "board": [9, 10, 3, 7, 2, 12, 1, 5, 13],
+  "board": [
+    9,
+    10,
+    3,
+    7,
+    2,
+    12,
+    1,
+    5,
+    13
+  ],
   "fixtures": [
-    {"d": "Sat 29 Aug · 3:00 AEST", "m": "Titans v Rabbitohs", "v": "Cbus Super Stadium"},
-    {"d": "Sat 29 Aug · 5:30 AEST", "m": "Roosters v Dolphins", "v": "Allianz Stadium"},
-    {"d": "Sat 29 Aug · 7:30 AEST", "m": "Cowboys v Tigers", "v": "Qld Country Bank Stadium"},
-    {"d": "Sun 30 Aug · 2:00 AEST", "m": "Warriors v Knights", "v": "Go Media Stadium"},
-    {"d": "Sun 30 Aug · 4:05 AEST", "m": "Eels v Sharks", "v": "CommBank Stadium"}
+    {
+      "d": "Sat 29 Aug · 3:00 AEST",
+      "m": "Titans v Rabbitohs",
+      "v": "Cbus Super Stadium"
+    },
+    {
+      "d": "Sat 29 Aug · 5:30 AEST",
+      "m": "Roosters v Dolphins",
+      "v": "Allianz Stadium"
+    },
+    {
+      "d": "Sat 29 Aug · 7:30 AEST",
+      "m": "Cowboys v Tigers",
+      "v": "Qld Country Bank Stadium"
+    },
+    {
+      "d": "Sun 30 Aug · 2:00 AEST",
+      "m": "Warriors v Knights",
+      "v": "Go Media Stadium"
+    },
+    {
+      "d": "Sun 30 Aug · 4:05 AEST",
+      "m": "Eels v Sharks",
+      "v": "CommBank Stadium"
+    }
   ],
   "wearers": {
-    "1": ["Kini·Tit", "Dufty·Sou", "Tedesco·Roo", "Tabuai-Fidow·Dol", "Drinkwater·Cow", "Bula·Tig", "Tuaupiki·War", "Ponga·Kni", "Twidle·Eel", "Kennedy·Sha"],
-    "2": ["De Groot·Tit", "Johnston·Sou", "B.Smith·Roo", "Isaako·Dol", "Burns·Cow", "Tupou·Tig", "Laulilii·War", "Hunt·Kni", "Kelly·Eel", "Katoa·Sha"],
-    "3": ["Brimson·Tit", "Duncan·Sou", "Savala·Roo", "Bostock·Dol", "Purdue·Cow", "Saukuru·Tig", "Leiataua·War", "Gagai·Kni", "Penisini·Eel", "Hiroti·Sha"],
-    "5": ["Ilias·Tit", "Graham·Sou", "Nawaqanitawase·Roo", "Cobbo·Dol", "Laybutt·Cow", "Skelton·Tig", "Khan-Pereira·War", "Marzhew·Kni", "Addo-Carr·Eel", "Mulitalo·Sha"],
-    "7": ["Pascoe·Tit", "Sullivan·Sou", "L.Walker·Roo", "Katoa·Dol", "Dearden·Cow", "Madden·Tig", "Martin·War", "Smith·Kni", "Moses·Eel", "Hynes·Sha"],
-    "9": ["Patston·Tit", "Smith·Sou", "Robson·Roo", "Marshall-King·Dol", "Mahoney·Cow", "Koroisau·Tig", "Egan·War", "Graham·Kni", "Da Silva·Eel", "Brailey·Sha"],
-    "10": ["Morrin·Tit", "Koloamatangi·Sou", "Collins·Roo", "Gilbert·Dol", "Taumalolo·Cow", "Pole·Tig", "Barnett·War", "Mooney·Kni", "Paulo·Eel", "Colquhoun·Sha"],
-    "12": ["Fotuaika·Tit", "Aitken·Sou", "Wong·Roo", "Finefeuiaki·Dol", "Nanai·Cow", "Sukkar·Tig", "Laban·War", "Manuleleua·Kni", "Kautoga·Eel", "Wilton·Sha"],
-    "13": ["Randall·Tit", "Murray·Sou", "Butcher·Roo", "Knowles·Dol", "Cotter·Cow", "Seyfarth·Tig", "Clark·War", "Croker·Kni", "Pryke·Eel", "McInnes·Sha"]
+    "1": [
+      "Kini·Tit",
+      "Dufty·Sou",
+      "Tedesco·Roo",
+      "Tabuai-Fidow·Dol",
+      "Drinkwater·Cow",
+      "Bula·Tig",
+      "Tuaupiki·War",
+      "Ponga·Kni",
+      "Twidle·Eel",
+      "Kennedy·Sha"
+    ],
+    "2": [
+      "De Groot·Tit",
+      "Johnston·Sou",
+      "B.Smith·Roo",
+      "Isaako·Dol",
+      "Burns·Cow",
+      "Tupou·Tig",
+      "Laulilii·War",
+      "Hunt·Kni",
+      "Kelly·Eel",
+      "Katoa·Sha"
+    ],
+    "3": [
+      "Brimson·Tit",
+      "Duncan·Sou",
+      "Savala·Roo",
+      "Bostock·Dol",
+      "Purdue·Cow",
+      "Saukuru·Tig",
+      "Leiataua·War",
+      "Gagai·Kni",
+      "Penisini·Eel",
+      "Hiroti·Sha"
+    ],
+    "5": [
+      "Ilias·Tit",
+      "Graham·Sou",
+      "Nawaqanitawase·Roo",
+      "Cobbo·Dol",
+      "Laybutt·Cow",
+      "Skelton·Tig",
+      "Khan-Pereira·War",
+      "Marzhew·Kni",
+      "Addo-Carr·Eel",
+      "Mulitalo·Sha"
+    ],
+    "7": [
+      "Pascoe·Tit",
+      "Sullivan·Sou",
+      "L.Walker·Roo",
+      "Katoa·Dol",
+      "Dearden·Cow",
+      "Madden·Tig",
+      "Martin·War",
+      "Smith·Kni",
+      "Moses·Eel",
+      "Hynes·Sha"
+    ],
+    "9": [
+      "Patston·Tit",
+      "Smith·Sou",
+      "Robson·Roo",
+      "Marshall-King·Dol",
+      "Mahoney·Cow",
+      "Koroisau·Tig",
+      "Egan·War",
+      "Graham·Kni",
+      "Da Silva·Eel",
+      "Brailey·Sha"
+    ],
+    "10": [
+      "Morrin·Tit",
+      "Koloamatangi·Sou",
+      "Collins·Roo",
+      "Gilbert·Dol",
+      "Taumalolo·Cow",
+      "Pole·Tig",
+      "Barnett·War",
+      "Mooney·Kni",
+      "Paulo·Eel",
+      "Colquhoun·Sha"
+    ],
+    "12": [
+      "Fotuaika·Tit",
+      "Aitken·Sou",
+      "Wong·Roo",
+      "Finefeuiaki·Dol",
+      "Nanai·Cow",
+      "Sukkar·Tig",
+      "Laban·War",
+      "Manuleleua·Kni",
+      "Kautoga·Eel",
+      "Wilton·Sha"
+    ],
+    "13": [
+      "Randall·Tit",
+      "Murray·Sou",
+      "Butcher·Roo",
+      "Knowles·Dol",
+      "Cotter·Cow",
+      "Seyfarth·Tig",
+      "Clark·War",
+      "Croker·Kni",
+      "Pryke·Eel",
+      "McInnes·Sha"
+    ]
   },
-  "scored": []
+  "scored": [
+    "Pascoe (Titans)",
+    "Brimson (Titans)",
+    "Johnston (Rabbitohs)",
+    "Duncan (Rabbitohs)",
+    "Koloamatangi (Rabbitohs)",
+    "Aitken (Rabbitohs)",
+    "Murray (Rabbitohs)"
+  ]
 }
