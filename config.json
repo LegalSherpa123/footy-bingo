@@ -9,6 +9,7 @@
     "2026-08-28T12:05:51"
   ],
   "pot_note": "Trial week is free. Finals: $10 in, winner takes the pot.",
+  "finished_teams": ["Titans", "Rabbitohs", "Roosters", "Dolphins", "Cowboys", "Tigers"],
   "board": [
     9,
     10,

@@ -5,12 +5,12 @@
 <style>
   :root{--ground:#F1F4F9;--surface:#FFFFFF;--surface-2:#F7F9FC;--ink:#16203A;--muted:#5C6780;--line:#DBE1EC;
     --accent:#D99500;--accent-ink:#3A2A00;--accent-soft:#FBEECB;--field:#158A4A;--field-soft:#DCF3E5;--field-ink:#0B3D22;
-    --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 26px rgba(16,24,40,.07);}
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 26px rgba(16,24,40,.07);--bad:#C0392B;--bad-soft:#FBEAE8;}
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#0C1220;--surface:#151F36;--surface-2:#0F1830;
     --ink:#EAF0F8;--muted:#93A0B8;--line:#26324C;--accent:#F4B62C;--accent-ink:#1A1200;--accent-soft:#2C2412;
-    --field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}}
+    --field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;--bad:#F1948A;--bad-soft:#3A1512;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}}
   :root[data-theme="dark"]{--ground:#0C1220;--surface:#151F36;--surface-2:#0F1830;--ink:#EAF0F8;--muted:#93A0B8;--line:#26324C;
-    --accent:#F4B62C;--accent-ink:#1A1200;--accent-soft:#2C2412;--field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;
+    --accent:#F4B62C;--accent-ink:#1A1200;--accent-soft:#2C2412;--field:#2BB56A;--field-soft:#123A28;--field-ink:#BDF6D3;--bad:#F1948A;--bad-soft:#3A1512;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.45);}
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
@@ -49,6 +49,7 @@
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
   .person{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .person.bingo{border-color:var(--accent)}
+  .person.isout{opacity:.6}.person.isout .status{color:var(--bad);font-weight:700}
   .person .name{font-weight:800;font-size:1.1rem}
   .person .status{font-size:.72rem;color:var(--muted);margin:1px 0 12px}
   .ribbon{position:absolute;top:12px;right:-34px;transform:rotate(45deg);background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:.64rem;letter-spacing:.1em;padding:3px 40px}
@@ -57,7 +58,12 @@
   .mc .n{font-family:"Bebas Neue",sans-serif;font-size:1.1rem;color:var(--muted);line-height:.8}
   .mc .pl{font-size:.68rem;font-weight:700;color:var(--ink);line-height:1.05;word-break:break-word}
   .mc.lit{background:var(--field-soft);border-color:var(--field)}.mc.lit .n{color:var(--field)}.mc.lit .pl{color:var(--field-ink)}
+  .mc.dead{background:var(--bad-soft);border-color:var(--bad)}.mc.dead .n{color:var(--bad)}.mc.dead .pl{color:var(--bad);text-decoration:line-through;opacity:.85}
   .mc.inwin{box-shadow:inset 0 0 0 2px var(--accent)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:2px 0 16px;font-size:.74rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .legend i{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+  .legend .g{background:var(--field-soft);border-color:var(--field)}.legend .r{background:var(--bad-soft);border-color:var(--bad)}.legend .n{background:var(--surface-2)}
   .note{margin-top:26px;color:var(--muted);font-size:.82rem;text-align:center;line-height:1.7}
   #boot{padding:44px 0;text-align:center;color:var(--muted)}
   footer{margin-top:14px;color:var(--muted);font-size:.76rem;text-align:center}
@@ -153,12 +159,17 @@
 
   function render(entries){
     var scoredKeys={}; (CFG.scored||[]).forEach(function(p){scoredKeys[key(p)]=true;});
+    var finished={}; (CFG.finished_teams||[]).forEach(function(t){finished[norm(t)]=true;});
+    function teamOf(p){var m=/^(.*?)\s*\((.*)\)\s*$/.exec(p);return m?norm(m[2]):"";}
     function evalCard(e){
-      var lit={};
-      BOARD.forEach(function(num,idx){var p=e.picks[String(num)];if(p&&scoredKeys[key(p)])lit[idx]=true;});
+      var lit={},dead={};
+      BOARD.forEach(function(num,idx){var p=e.picks[String(num)];if(!p)return;
+        if(scoredKeys[key(p)])lit[idx]=true; else if(finished[teamOf(p)])dead[idx]=true;});
       var lines=LINES.filter(function(L){return L[1].every(function(i){return lit[i];});}).map(function(L){return L[0];});
       var winset={};lines.forEach(function(nm){var L=LINES.find(function(x){return x[0]===nm;});L[1].forEach(function(i){winset[i]=1;});});
-      return {lit:lit,lines:lines,hits:Object.keys(lit).length,winset:winset};
+      // still-alive lines: no dead square
+      var open=LINES.filter(function(L){return !L[1].some(function(i){return dead[i];});}).length;
+      return {lit:lit,dead:dead,lines:lines,hits:Object.keys(lit).length,winset:winset,open:open};
     }
     var rows=entries.map(function(e){return {e:e,r:evalCard(e)};});
     rows.sort(function(a,b){return (b.r.lines.length-a.r.lines.length)||(b.r.hits-a.r.hits)||String(a.e.name).localeCompare(b.e.name);});
@@ -178,15 +189,18 @@
       var e=row.e,r=row.r,win=r.lines.length>0,mini="";
       BOARD.forEach(function(num,idx){
         var p=e.picks[String(num)]||"";var nm=(/^(.*?)\s*\(/.exec(p)||[])[1]||p||"—";
-        mini+='<div class="mc'+(r.lit[idx]?" lit":"")+(r.winset[idx]?" inwin":"")+'"><div class="n">'+num+'</div><div class="pl">'+esc(nm)+'</div></div>';
+        mini+='<div class="mc'+(r.lit[idx]?" lit":r.dead[idx]?" dead":"")+(r.winset[idx]?" inwin":"")+'"><div class="n">'+num+'</div><div class="pl">'+esc(nm)+'</div></div>';
       });
-      return '<div class="person'+(win?" bingo":"")+'">'+(win?'<div class="ribbon">BINGO</div>':'')+
-        '<div class="name">'+esc(e.name)+'</div><div class="status">'+(win?('Three-in-a-row: '+r.lines.join(", ")):(r.hits+' / 9 squares lit'))+'</div>'+
+      var st=win?('Three-in-a-row: '+r.lines.join(", ")):(r.open===0?('OUT · '+r.hits+'/9'):(r.hits+' / 9 lit · '+r.open+' line'+(r.open>1?'s':'')+' still open'));
+      return '<div class="person'+(win?" bingo":(r.open===0?" isout":""))+'">'+(win?'<div class="ribbon">BINGO</div>':'')+
+        '<div class="name">'+esc(e.name)+'</div><div class="status">'+st+'</div>'+
         '<div class="mini">'+mini+'</div></div>';
     }).join("")+'</div></section>';
 
+    var legend=(CFG.finished_teams&&CFG.finished_teams.length)?
+      '<div class="legend"><span><i class="g"></i>Scored</span><span><i class="r"></i>Can\'t score — game over</span><span><i class="n"></i>Still to play</span></div>':'';
     var note = rows.length? "" : '<p class="note">No cards in yet.</p>';
-    $("stage").innerHTML=tk+lb+cards+note+(PREVIEW?'<p class="note"><b>Preview mode</b> — sample cards. The real board reveals your mates\' cards at kickoff.</p>':'');
+    $("stage").innerHTML=tk+lb+legend+cards+note+(PREVIEW?'<p class="note"><b>Preview mode</b> — sample cards. The real board reveals your mates\' cards at kickoff.</p>':'');
     // auto-refresh scores/cards every 60s once live
     if(!PREVIEW) setTimeout(loadEntries,60000);
   }
