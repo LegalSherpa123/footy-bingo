@@ -9,7 +9,14 @@
     "2026-08-28T12:05:51"
   ],
   "pot_note": "Trial week is free. Finals: $10 in, winner takes the pot.",
-  "finished_teams": ["Titans", "Rabbitohs", "Roosters", "Dolphins", "Cowboys", "Tigers"],
+  "finished_teams": [
+    "Titans",
+    "Rabbitohs",
+    "Roosters",
+    "Dolphins",
+    "Cowboys",
+    "Tigers"
+  ],
   "board": [
     9,
     10,
@@ -170,6 +177,19 @@
     "Marshall-King (Dolphins)",
     "Skelton (Tigers)",
     "Purdue (Cowboys)",
-    "Tupou (Tigers)"
+    "Tupou (Tigers)",
+    "Laban (Warriors)",
+    "Egan (Warriors)",
+    "Clark (Warriors)",
+    "Leiataua (Warriors)",
+    "Khan-Pereira (Warriors)",
+    "Hunt (Knights)",
+    "Manuleleua (Knights)",
+    "Marzhew (Knights)",
+    "Twidle (Eels)",
+    "Penisini (Eels)",
+    "Moses (Eels)",
+    "Katoa (Sharks)",
+    "Brailey (Sharks)"
   ]
 }
