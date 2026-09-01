@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Footy Bingo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +94,7 @@
     <section class="hero">
       <div class="invited" id="invited">You're invited</div>
       <h1 class="bebas">Footy <span class="of">Bingo</span></h1>
-      <p class="tag">Same nine numbers for everyone. Pick a player for each. When your player scores a try, your square lights up — three-in-a-row wins the week.</p>
+      <p class="tag" id="tagline">Same nine numbers for everyone. Pick a player for each. When your player scores a try, your square lights up — three-in-a-row wins the week.</p>
       <div class="cta">
         <a class="btn primary" href="#build">🏉 Build your card</a>
         <a class="btn" href="results.html">📊 Live board</a>
@@ -155,8 +156,10 @@
 
   function init(cfg){
     CFG=cfg; var BOARD=cfg.board, LOCK=Date.parse(cfg.lock_utc); locked=Date.now()>=LOCK;
+    if(cfg.teams_map){Object.keys(cfg.teams_map).forEach(function(k){TEAM[k]=cfg.teams_map[k];});}
     $("boot").style.display="none"; $("app").style.display="block";
     $("invited").textContent="You're invited · "+cfg.round;
+    if(cfg.pot_note&&$("tagline")){$("tagline").insertAdjacentHTML("beforeend"," <b>"+cfg.pot_note+"</b>");}
     $("roundfoot").textContent=cfg.round;
     var grid=$("cardgrid");
     BOARD.forEach(function(num){

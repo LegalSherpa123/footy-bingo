@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>How Footy Bingo Works</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,10 +138,10 @@
 
   <!-- S8 -->
   <section class="scene" data-t="5200">
-    <div class="eyebrow">This weekend is a free trial</div>
+    <div class="eyebrow" id="s8eyebrow">This weekend is a free trial</div>
     <h2>Build your card.<br>Watch it <span class="grn">light up live</span>.</h2>
     <div class="cta"><a href="index.html">🏉 Build your card</a></div>
-    <div class="free">Trial week — no money, just get a card in 🍻</div>
+    <div class="free" id="s8free">Trial week — no money, just get a card in 🍻</div>
   </section>
 
   <div class="controls">
@@ -163,7 +164,7 @@
     });
     return el.children;
   }
-  var B=[9,10,3,7,2,12,1,5,13];
+  var B=[9,10,3,7,2,12,1,5,13], DEMO="TEDESCO";
 
   function activate(i){
     scenes.forEach(function(s,k){s.classList.toggle("on",k===i);});
@@ -173,7 +174,7 @@
     if(s.querySelector("#b4")){
       var cs=buildBoard(document.getElementById("b4"),B);
       // light the '1' square (index 6) after a beat
-      setTimeout(function(){cs[6].classList.add("lit");cs[6].querySelector(".num").insertAdjacentHTML("afterend",'<div class="pl">TEDESCO ✓</div>');},900);
+      setTimeout(function(){cs[6].classList.add("lit");cs[6].querySelector(".num").insertAdjacentHTML("afterend",'<div class="pl">'+DEMO+' ✓</div>');},900);
     }
     if(s.querySelector("#b5")){
       var cs=buildBoard(document.getElementById("b5"),B);
@@ -208,6 +209,12 @@
     if(paused){clearTimeout(timer);var elapsed=performance.now()-start;dur=dur-elapsed;}
     else{start=performance.now();timer=setTimeout(next,dur);tickProg();}
   };
-  next();
+  fetch("config.json?v="+Date.now()).then(function(r){return r.json();}).then(function(cfg){
+    if(cfg.board&&cfg.board.length===9){B=cfg.board;}
+    if(cfg.demo_player){DEMO=cfg.demo_player;}
+    var eb=document.getElementById("s8eyebrow"), fr=document.getElementById("s8free");
+    if(eb&&cfg.s8_eyebrow){eb.textContent=cfg.s8_eyebrow;}
+    if(fr&&cfg.s8_note){fr.textContent=cfg.s8_note;}
+  }).catch(function(){}).then(function(){ next(); });
 })();
 </script>

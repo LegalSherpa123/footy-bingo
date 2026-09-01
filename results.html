@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Footy Bingo Live Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,7 +131,12 @@
 
   function filt(arr){
     var ex=CFG.exclude||[];
-    return (arr||[]).filter(function(e){var s=String(e.submitted||"");return !ex.some(function(p){return s.indexOf(p)===0;});});
+    var since=CFG.since_utc?Date.parse(CFG.since_utc):0;
+    return (arr||[]).filter(function(e){
+      var s=String(e.submitted||"");
+      if(since && Date.parse(s)<since) return false;              // last week's cards
+      return !ex.some(function(p){return s.indexOf(p)===0;});
+    });
   }
   function fetchEntries(cb){
     if(PREVIEW && !CFG.endpoint){ return cb(SAMPLE()); }
@@ -207,10 +213,16 @@
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 
-  function SAMPLE(){return [
-    {name:"Dave",picks:{"9":"Brailey (Sharks)","10":"Taumalolo (Cowboys)","3":"Savala (Roosters)","7":"Moses (Eels)","2":"Johnston (Rabbitohs)","12":"Aitken (Rabbitohs)","1":"Tedesco (Roosters)","5":"Mulitalo (Sharks)","13":"Murray (Rabbitohs)"}},
-    {name:"Mitch",picks:{"9":"Brailey (Sharks)","10":"Paulo (Eels)","3":"Brimson (Titans)","7":"Moses (Eels)","2":"Hunt (Knights)","12":"Wong (Roosters)","1":"Tedesco (Roosters)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}},
-    {name:"Priya",picks:{"9":"Robson (Roosters)","10":"Paulo (Eels)","3":"Brimson (Titans)","7":"Hynes (Sharks)","2":"Hunt (Knights)","12":"Wong (Roosters)","1":"Ponga (Knights)","5":"Addo-Carr (Eels)","13":"Clark (Warriors)"}}
-  ];}
+  function SAMPLE(){
+    var nm=function(e){var p=String(e).split("·");return p[0]+" ("+(((CFG.teams_map)||{})[p[1]]||p[1])+")";};
+    return ["Dave","Mitch","Priya"].map(function(who,k){
+      var picks={};
+      BOARD.forEach(function(num,i){
+        var arr=((CFG.wearers)||{})[String(num)]||[];
+        if(arr.length){ picks[String(num)]=nm(arr[(i*3+k*5)%arr.length]); }
+      });
+      return {name:who,picks:picks};
+    });
+  }
 })();
 </script>
