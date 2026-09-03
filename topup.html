@@ -1,0 +1,198 @@
+<meta charset="utf-8">
+<title>Footy Bingo — finish your card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --ground:#0C1220; --surface:#141C2E; --surface-2:#1A2438;
+    --ink:#EDF1F8; --muted:#93A0B8; --line:#26314A;
+    --accent:#F5B93B; --accent-soft:rgba(245,185,59,.14); --good:#3DBE7A; --bad:#E4633F;
+    --shadow:0 12px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.55 Archivo,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:620px;margin:0 auto;padding:22px 16px 60px;display:flex;flex-direction:column;gap:18px}
+  .bebas{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.02em;line-height:.95;margin:0}
+  h1{font-size:2.6rem}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 20px;box-shadow:var(--shadow)}
+  .eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  p{margin:.6em 0}
+  .muted{color:var(--muted)}
+  label{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:6px}
+  input,select{width:100%;padding:12px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:inherit}
+  select.empty{color:var(--muted)}
+  .btn{display:inline-block;padding:13px 20px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font-weight:700;cursor:pointer;font:inherit}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#20160A}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+  .sq{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .sq+.sq{margin-top:12px}
+  .pos{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:800}
+  .num{font-family:'Bebas Neue',Impact,sans-serif;font-size:2rem;line-height:1}
+  .kept{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);margin-top:8px;font-size:.94rem}
+  .kept b{font-weight:700}
+  .msg{margin-top:14px;padding:12px 14px;border-radius:12px;display:none}
+  .msg.show{display:block}
+  .msg.ok{background:rgba(61,190,122,.12);border:1px solid var(--good)}
+  .msg.err{background:rgba(228,99,63,.12);border:1px solid var(--bad)}
+  footer{color:var(--muted);font-size:.85rem;text-align:center}
+  a{color:var(--accent)}
+</style>
+
+<div class="wrap">
+  <div class="card">
+    <div class="eyebrow" id="eyebrow">Round 27</div>
+    <h1 class="bebas">Finish your card</h1>
+    <p class="muted" id="intro">Loading…</p>
+  </div>
+
+  <div class="card" id="stage" style="display:none">
+    <label for="who">Your name (exactly as you put it in)</label>
+    <div class="row">
+      <div style="flex:1;min-width:220px"><input id="who" placeholder="e.g. Plow" autocomplete="off"></div>
+      <button class="btn primary" id="find">Find my card</button>
+    </div>
+    <div class="msg" id="msg"></div>
+    <div id="cardbox" style="display:none;margin-top:18px"></div>
+  </div>
+
+  <footer>NRL Footy Bingo · <a href="results.html">Live board</a></footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var POS={1:"Fullback",2:"Wing",3:"Centre",4:"Centre",5:"Wing",6:"Five-eighth",7:"Halfback",8:"Prop",9:"Hooker",10:"Prop",11:"2nd row",12:"2nd row",13:"Lock"};
+  var TEAM={};
+  var $=function(id){return document.getElementById(id)};
+  var CFG=null, CARD=null, NEW={};
+
+  function fmt(entry){var p=String(entry).split("·");return p[0]+" ("+(TEAM[p[1]]||p[1])+")";}
+  function abbrOf(entry){return String(entry).split("·")[1];}
+  function say(cls,html){var m=$("msg");m.className="msg show "+cls;m.innerHTML=html;}
+
+  fetch("config.json?v="+Date.now()).then(function(r){return r.json();}).then(init).catch(function(){
+    $("intro").textContent="Couldn't load this week's game. Refresh in a moment.";
+  });
+
+  function init(cfg){
+    CFG=cfg;
+    TEAM=cfg.teams_map||{};
+    var lockAt=Date.parse(cfg.topup_lock_utc||cfg.lock_utc);
+    var shut=Date.now()>=lockAt;
+    var gone=(cfg.topup_exclude_teams||[]).map(function(a){return TEAM[a]||a;});
+    $("eyebrow").textContent=cfg.round;
+    if(shut){
+      $("intro").innerHTML="This top-up closed at <b>"+(cfg.topup_lock_label||cfg.lock_label)+"</b>. Cards are locked — see the <a href='results.html'>live board</a>.";
+      return;
+    }
+    $("intro").innerHTML="Three squares were dropped off your card by a fault on this site, not by you. "+
+      "Fill them in here and the rest of your card stays exactly as you had it. "+
+      "You have until <b>"+(cfg.topup_lock_label||cfg.lock_label)+"</b>."+
+      (gone.length?" Because "+gone.join(" v ")+" has already been played, those two sides aren't options — every other game is.":"");
+    $("stage").style.display="block";
+    $("find").addEventListener("click",find);
+    $("who").addEventListener("keydown",function(e){if(e.key==="Enter"){find();}});
+  }
+
+  function entries(cb){
+    var name="__cb"+Math.floor(Math.random()*1e6);
+    window[name]=function(data){cb((data&&data.entries)||[]);try{delete window[name];}catch(e){}};
+    var s=document.createElement("script");
+    s.src=CFG.endpoint+"?callback="+name+"&v="+Date.now();
+    s.onerror=function(){cb(null);};
+    document.body.appendChild(s);
+  }
+
+  function decode(e){
+    var keys=CFG.slot_keys, raw=e.picks||{}, p={};
+    if(!keys||keys.length!==CFG.board.length){return raw;}
+    CFG.board.forEach(function(num,i){p[String(num)]=raw[keys[i]]||"";});
+    return p;
+  }
+
+  function find(){
+    var want=$("who").value.trim().toLowerCase();
+    if(!want){say("err","Pop your name in first.");return;}
+    $("find").disabled=true;$("find").textContent="Looking…";
+    entries(function(all){
+      $("find").disabled=false;$("find").textContent="Find my card";
+      if(!all){say("err","Couldn't reach the card list. Try again in a moment.");return;}
+      var since=CFG.since_utc?Date.parse(CFG.since_utc):0;
+      var mine=all.filter(function(e){
+        return String(e.name||"").trim().toLowerCase()===want &&
+               (!since || Date.parse(e.submitted)>=since);
+      }).sort(function(a,b){return Date.parse(a.submitted)-Date.parse(b.submitted);});
+      if(!mine.length){
+        say("err","No card under that name this week. If you haven't put one in yet, "+
+                  "<a href='index.html'>build a full card here</a>.");
+        return;
+      }
+      CARD=decode(mine[mine.length-1]);
+      render();
+    });
+  }
+
+  function render(){
+    var gone=CFG.topup_exclude_teams||[];
+    var blanks=CFG.board.filter(function(n){return !CARD[String(n)];});
+    var box=$("cardbox");
+    if(!blanks.length){
+      say("ok","Your card is already complete — nothing to fill in. Watch it on the <a href='results.html'>live board</a>.");
+      box.style.display="none";return;
+    }
+    $("msg").className="msg";
+    var html='<div class="eyebrow">Still to fill — '+blanks.length+' square'+(blanks.length>1?'s':'')+'</div>';
+    blanks.forEach(function(num){
+      var opts=(CFG.wearers[String(num)]||[]).filter(function(e){return gone.indexOf(abbrOf(e))<0;});
+      html+='<div class="sq"><div class="pos">'+POS[num]+'</div><div class="num">'+num+'</div>'+
+            '<select class="empty" data-num="'+num+'"><option value="" selected>Pick a player…</option>'+
+            opts.map(function(e){var v=fmt(e);return '<option value="'+v+'">'+v+'</option>';}).join("")+
+            '</select></div>';
+    });
+    html+='<div class="eyebrow" style="margin-top:20px">Already locked in</div>';
+    CFG.board.forEach(function(num){
+      if(CARD[String(num)]){
+        html+='<div class="kept"><span class="muted">#'+num+' '+POS[num]+'</span><b>'+CARD[String(num)]+'</b></div>';
+      }
+    });
+    html+='<div class="row" style="margin-top:18px"><button class="btn primary" id="save" disabled>Save my card</button>'+
+          '<span class="muted" id="tally">0 of '+blanks.length+' picked</span></div>';
+    box.innerHTML=html;box.style.display="block";
+
+    var sels=box.querySelectorAll("select");
+    sels.forEach(function(sel){
+      sel.addEventListener("change",function(){
+        var n=sel.getAttribute("data-num");
+        if(sel.value){NEW[n]=sel.value;sel.classList.remove("empty");}else{delete NEW[n];sel.classList.add("empty");}
+        var done=Object.keys(NEW).length;
+        $("tally").textContent=done+" of "+blanks.length+" picked";
+        $("save").disabled=done!==blanks.length;
+      });
+    });
+    $("save").addEventListener("click",function(){save(blanks);});
+  }
+
+  function save(blanks){
+    var btn=$("save");btn.disabled=true;btn.textContent="Saving…";
+    var merged={};
+    CFG.board.forEach(function(num){merged[String(num)]=NEW[String(num)]||CARD[String(num)]||"";});
+    var keys=CFG.slot_keys, slotted={};
+    CFG.board.forEach(function(num,i){slotted[keys[i]]=merged[String(num)];});
+    fetch(CFG.endpoint,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
+                        body:JSON.stringify({name:$("who").value.trim(),picks:slotted})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(!res||!res.ok){throw new Error("save failed");}
+        $("cardbox").style.display="none";
+        say("ok","Sorted — your card is complete and it's the one that counts. "+
+                 "Watch it on the <a href='results.html'>live board</a>. 🏉");
+      })
+      .catch(function(){
+        btn.disabled=false;btn.textContent="Save my card";
+        say("err","Couldn't save that. Try once more, or send your three picks to Angus.");
+      });
+  }
+})();
+</script>
