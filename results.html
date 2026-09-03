@@ -146,12 +146,23 @@
       return !ex.some(function(p){return s.indexOf(p)===0;});
     }).map(decode);
   }
+  // One card per person: if a name appears twice, the latest card wins (someone redoing theirs).
+  function latestPerName(arr){
+    var seen={}, out=[];
+    (arr||[]).forEach(function(e){
+      var k=String(e.name||"").trim().toLowerCase();
+      if(!(k in seen)){ seen[k]=out.length; out.push(e); return; }
+      var prev=out[seen[k]];
+      if(Date.parse(e.submitted)>=Date.parse(prev.submitted)){ out[seen[k]]=e; }
+    });
+    return out;
+  }
   function fetchEntries(cb){
     if(PREVIEW && !CFG.endpoint){ return cb(SAMPLE()); }
     if(!CFG.endpoint){ return cb([]); }
     var name="__cb"+Math.floor(Math.random()*1e6);
     var done=false;
-    window[name]=function(data){done=true;cb(filt((data&&data.entries)||[]));try{delete window[name];}catch(e){}};
+    window[name]=function(data){done=true;cb(latestPerName(filt((data&&data.entries)||[])));try{delete window[name];}catch(e){}};
     var s=document.createElement("script");
     s.src=CFG.endpoint+"?callback="+name+"&v="+Date.now();
     s.onerror=function(){if(!done)cb(null);};
