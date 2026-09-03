@@ -144,6 +144,15 @@
   var $=function(id){return document.getElementById(id)};
   var CFG=null, picks={}, locked=false;
   function fmt(entry){var p=entry.split("·");return p[0]+" ("+(TEAM[p[1]]||p[1])+")";}
+  // The collection sheet has nine fixed columns keyed by last season's board numbers.
+  // Post picks into those columns as generic slots, in board order, so no pick is dropped.
+  function slotEncode(p){
+    var keys=CFG&&CFG.slot_keys;
+    if(!keys||!CFG.board||keys.length!==CFG.board.length){return p;}
+    var out={};
+    CFG.board.forEach(function(num,i){out[keys[i]]=p[String(num)]||"";});
+    return out;
+  }
 
   $("themeBtn").addEventListener("click",function(){
     var c=document.documentElement.getAttribute("data-theme");
@@ -210,7 +219,7 @@
     var name=$("playerName").value.trim();
     if(Object.keys(picks).length<9||!name||locked)return;
     var btn=$("submitCard");btn.disabled=true;btn.textContent="Locking in…";
-    var payload={name:name,picks:picks};
+    var payload={name:name,picks:slotEncode(picks)};
     if(CFG.endpoint){
       fetch(CFG.endpoint,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
         .then(function(r){return r.json();})

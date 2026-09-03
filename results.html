@@ -129,14 +129,22 @@
     });
   }
 
+  // Cards are stored in nine fixed sheet columns; map those slots back to this week's numbers.
+  function decode(e){
+    var keys=CFG.slot_keys;
+    if(!keys||!BOARD||keys.length!==BOARD.length) return e;
+    var raw=e.picks||{}, p={};
+    BOARD.forEach(function(num,i){p[String(num)]=raw[keys[i]]||"";});
+    return {submitted:e.submitted,name:e.name,picks:p};
+  }
   function filt(arr){
     var ex=CFG.exclude||[];
     var since=CFG.since_utc?Date.parse(CFG.since_utc):0;
     return (arr||[]).filter(function(e){
       var s=String(e.submitted||"");
-      if(since && Date.parse(s)<since) return false;              // last week's cards
+      if(since && Date.parse(s)<since) return false;              // earlier rounds
       return !ex.some(function(p){return s.indexOf(p)===0;});
-    });
+    }).map(decode);
   }
   function fetchEntries(cb){
     if(PREVIEW && !CFG.endpoint){ return cb(SAMPLE()); }
