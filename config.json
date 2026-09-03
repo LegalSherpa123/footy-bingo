@@ -1,12 +1,12 @@
 {
   "round": "Round 27 · Last regular round",
-  "lock_utc": "2026-09-03T08:00:00Z",
-  "lock_label": "Thu 3 Sep 8:00pm NZT",
+  "lock_utc": "2026-09-03T09:00:00Z",
+  "lock_label": "Thu 3 Sep 9:00pm NZT",
   "since_utc": "2026-09-01T09:47:00Z",
   "endpoint": "https://script.google.com/macros/s/AKfycbwAZ8TcqCPl2VHXxe4oFTv5qzDaUsHrBvPFpGUbWX3XTV4-M6wnisTKhLW4t6tqfQfj/exec",
   "pot_note": "$10 in — the pot splits by total three-in-a-rows.",
   "s8_eyebrow": "Round 27 — $10 in",
-  "s8_note": "$10 in, pot splits by three-in-a-rows — get your card in before Thu 8pm 🍺",
+  "s8_note": "$10 in, pot splits by three-in-a-rows — get your card in before Thu 9pm 🍺",
   "demo_player": "CLEARY",
   "teams_map": {
     "Bul": "Bulldogs",
