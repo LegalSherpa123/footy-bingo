@@ -48,7 +48,16 @@
     "Pan": "Panthers",
     "Tig": "Tigers"
   },
-  "finished_teams": [],
+  "finished_teams": [
+    "Bulldogs",
+    "Broncos",
+    "Titans",
+    "Dolphins",
+    "Rabbitohs",
+    "Roosters",
+    "Warriors",
+    "Sea Eagles"
+  ],
   "board": [
     2,
     11,
