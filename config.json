@@ -19,11 +19,21 @@
     "2026-09-03T08:40:35",
     "2026-09-03T08:41:09"
   ],
-  "topup_lock_utc": "2026-09-04T07:45:00Z",
-  "topup_lock_label": "Fri 4 Sep 7:45pm NZT",
+  "topup_lock_utc": "2026-09-06T03:45:00Z",
+  "topup_lock_label": "Sun 6 Sep 3:45pm NZT",
   "topup_exclude_teams": [
     "Bul",
-    "Bro"
+    "Bro",
+    "Tit",
+    "Dol",
+    "Sou",
+    "Roo",
+    "War",
+    "Man",
+    "Cow",
+    "Rai",
+    "Sha",
+    "Sto"
   ],
   "endpoint": "https://script.google.com/macros/s/AKfycbwAZ8TcqCPl2VHXxe4oFTv5qzDaUsHrBvPFpGUbWX3XTV4-M6wnisTKhLW4t6tqfQfj/exec",
   "pot_note": "$10 in — the pot splits by total three-in-a-rows.",
