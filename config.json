@@ -56,7 +56,11 @@
     "Rabbitohs",
     "Roosters",
     "Warriors",
-    "Sea Eagles"
+    "Sea Eagles",
+    "Cowboys",
+    "Raiders",
+    "Sharks",
+    "Storm"
   ],
   "board": [
     2,
@@ -300,6 +304,18 @@
     "Pompey (Warriors)",
     "Hopoate (Sea Eagles)",
     "Nicoll-Klokstad (Warriors)",
-    "Feledy (Sea Eagles)"
+    "Feledy (Sea Eagles)",
+    "Savage (Raiders)",
+    "Weekes (Raiders)",
+    "Black (Raiders)",
+    "Clifford (Cowboys)",
+    "Bateman (Cowboys)",
+    "Drinkwater (Cowboys)",
+    "Burns (Cowboys)",
+    "Strange (Raiders)",
+    "Faalogo (Storm)",
+    "Katoa (Sharks)",
+    "Jones (Sharks)",
+    "Burns (Sharks)"
   ]
 }
