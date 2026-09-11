@@ -36,15 +36,15 @@
   },
   "finished_teams": [],
   "board": [
-    1,
-    12,
     5,
-    6,
-    4,
+    11,
     3,
-    2,
+    4,
+    13,
     7,
-    11
+    2,
+    6,
+    1
   ],
   "fixtures": [
     {
@@ -149,15 +149,15 @@
       "Papali'i·Pan",
       "Foketi·Roo"
     ],
-    "12": [
-      "Duncan·Sou",
-      "Manuleleua·Kni",
-      "Laban·War",
-      "Finefeuiaki·Dol",
-      "Wilton·Sha",
-      "Nanai·Cow",
-      "Martin·Pan",
-      "Wong·Roo"
+    "13": [
+      "Murray·Sou",
+      "Croker·Kni",
+      "Clark·War",
+      "Knowles·Dol",
+      "McInnes·Sha",
+      "Cotter·Cow",
+      "Yeo·Pan",
+      "Radley·Roo"
     ]
   },
   "scored": []
