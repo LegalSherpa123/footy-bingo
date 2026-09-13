@@ -34,7 +34,16 @@
     "Pan": "Panthers",
     "Roo": "Roosters"
   },
-  "finished_teams": [],
+  "finished_teams": [
+    "Rabbitohs",
+    "Knights",
+    "Warriors",
+    "Dolphins",
+    "Sharks",
+    "Cowboys",
+    "Panthers",
+    "Roosters"
+  ],
   "board": [
     5,
     11,
@@ -160,5 +169,25 @@
       "Radley·Roo"
     ]
   },
-  "scored": []
+  "scored": [
+    "McEwen (Knights)",
+    "Gagai (Knights)",
+    "Graham (Rabbitohs)",
+    "Young (Knights)",
+    "Tuaupiki (Warriors)",
+    "Cobbo (Dolphins)",
+    "Farnworth (Dolphins)",
+    "Tabuai-Fidow (Dolphins)",
+    "Bostock (Dolphins)",
+    "Burns (Cowboys)",
+    "Katoa (Sharks)",
+    "Laybutt (Cowboys)",
+    "Kennedy (Sharks)",
+    "Hynes (Sharks)",
+    "Purdue (Cowboys)",
+    "Toia (Roosters)",
+    "Nawaqanitawase (Roosters)",
+    "Edwards (Panthers)",
+    "To'o (Panthers)"
+  ]
 }
